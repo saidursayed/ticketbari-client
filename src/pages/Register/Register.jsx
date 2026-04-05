@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
@@ -7,9 +7,9 @@ import { imageUpload, saveOrUpdateUser } from "../../utils";
 import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, updateUserProfile, signInWithGoogle, loading } =
-    useAuth();
-
+  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state || "/";
@@ -25,41 +25,48 @@ const Register = () => {
     const imageFile = image[0];
 
     try {
+      setIsSubmitting(true);
       const imageURL = await imageUpload(imageFile);
 
       const result = await createUser(email, password);
 
       await updateUserProfile(name, imageURL);
 
-      // await saveOrUpdateUser({ name, email, image: imageURL });
+      await saveOrUpdateUser({ name, email, image: imageURL });
 
       console.log(result);
+
       navigate(from, { replace: true });
       toast.success("Signup Successful");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
+      setGoogleLoading(true);
       const { user } = await signInWithGoogle();
-      // await saveOrUpdateUser({
-      //   name: user?.displayName,
-      //   email: user?.email,
-      //   image: user?.photoURL,
-      // });
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
 
       navigate(from, { replace: true });
       toast.success("Signup Successful");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
   return (
     // light - #F8FAFC dark - #002C3F
     <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] py-4 sm:py-6 lg:py-8">
@@ -168,9 +175,10 @@ const Register = () => {
           {/* Button */}
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full py-3 rounded-lg bg-[#CEB45F]  text-black font-semibold hover:bg-[#ffa633] transition duration-300 shadow-md cursor-pointer"
           >
-            Register
+            {isSubmitting ? "Registering..." : "Register"}
           </button>
         </form>
 
@@ -185,12 +193,13 @@ const Register = () => {
         <div className="flex justify-center">
           <button
             onClick={handleGoogleSignIn}
+            disabled={googleLoading}
             className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-white border border-[#CEB45F] shadow-sm hover:shadow-lg  transition-all duration-300 cursor-pointer"
           >
             <FcGoogle size={22} />
 
             <span className="text-[#002C3F] font-semibold">
-              Continue with Google
+              {googleLoading ? "Signing in..." : "Continue with Google"}
             </span>
           </button>
         </div>
