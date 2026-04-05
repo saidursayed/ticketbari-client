@@ -18,7 +18,15 @@ const ManageTickets = () => {
     },
   });
 
-
+  const handleStatusUpdate = async (id, status) => {
+    try {
+      await axiosSecure.patch(`/tickets/status/${id}`, { status });
+      toast.success(`Ticket ${status}`);
+      refetch();
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
 
   if (isLoading) return <span>Loading...</span>;
 
@@ -101,11 +109,13 @@ const ManageTickets = () => {
                   </td>
                   <td className="px-6 py-4 text-center space-x-2">
                     <button
+                      onClick={() => handleStatusUpdate(ticket._id, "approved")}
                       className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
                     >
                       Approve
                     </button>
                     <button
+                      onClick={() => handleStatusUpdate(ticket._id, "rejected")}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
                     >
                       Reject
