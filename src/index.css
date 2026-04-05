@@ -9,13 +9,17 @@
   name: "light";
   default: true;
   --color-primary: #ffa633;
-  --color-secondary: #002C3F;
+  --color-secondary: #002c3f;
 
   /* --color-base-content: #2E2ddd; */
   /* --color-neutral-content: #dadada; */
 }
 
-
 * {
   font-family: "Open Sans", sans-serif;
+}
+
+.input-style {
+  @apply w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl 
+  focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition;
 }

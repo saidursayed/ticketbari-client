@@ -34,6 +34,17 @@ const ManageUsers = () => {
     }
   };
 
+  const handleFraud = async (id) => {
+    try {
+      await axiosSecure.patch(`/users/fraud/${id}`);
+      console.log(id);
+      refetch()
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
+
   if (isLoading) return <p className="text-center mt-10">Loading users...</p>;
 
   return (
@@ -96,9 +107,9 @@ const ManageUsers = () => {
                     )}
 
                     {/* If vendor */}
-                    {user.role === "vendor" && (
+                    {user.role === "vendor" && !user.isFraud && (
                       <button
-                        onClick={() => handleRoleUpdate(user.email, "fraud")}
+                        onClick={() => handleFraud(user._id)}
                         className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                       >
                         Mark as Fraud
