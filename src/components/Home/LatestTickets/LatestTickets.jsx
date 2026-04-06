@@ -10,7 +10,7 @@ const LatestTickets = () => {
   const { data: latestTickets = [], isLoading } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/tickets/latest");
+      const res = await axios.get("http://localhost:3000/latest-tickets");
       return res.data;
     },
   });

@@ -13,7 +13,7 @@ const ManageTickets = () => {
   } = useQuery({
     queryKey: ["tickets"],
     queryFn: async () => {
-      const result = await axiosSecure.get("/tickets");
+      const result = await axiosSecure.get("/manage-tickets");
       return result.data;
     },
   });
