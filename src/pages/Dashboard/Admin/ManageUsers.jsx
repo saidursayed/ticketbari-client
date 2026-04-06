@@ -19,7 +19,6 @@ const ManageUsers = () => {
       return result.data;
     },
   });
-  console.log(users);
 
   const handleRoleUpdate = async (email, role) => {
     try {
@@ -34,11 +33,15 @@ const ManageUsers = () => {
     }
   };
 
-  const handleFraud = async (id) => {
+  const handleFraud = async (user) => {
     try {
-      await axiosSecure.patch(`/users/fraud/${id}`);
-      console.log(id);
-      refetch()
+      const updatedValue = !user.isFraud;
+      const result = await axiosSecure.patch(`/users/fraud/${user?._id}`, {
+        isFraud: updatedValue,
+      });
+
+      refetch();
+      toast.success(result.data.message);
     } catch (err) {
       console.log(err);
       toast.error(err.message);
@@ -72,16 +75,16 @@ const ManageUsers = () => {
                 <td>
                   <span
                     className={`px-2 py-1 rounded text-sm ${
-                      user.role === "admin"
-                        ? "bg-green-100 text-green-600"
-                        : user.role === "vendor"
-                          ? "bg-indigo-100 text-indigo-600"
-                          : user.role === "fraud"
-                            ? "bg-red-100 text-red-600"
+                      user.isFraud
+                        ? "bg-red-100 text-red-600"
+                        : user.role === "admin"
+                          ? "bg-green-100 text-green-600"
+                          : user.role === "vendor"
+                            ? "bg-indigo-100 text-indigo-600"
                             : "bg-gray-100 text-gray-600"
                     }`}
                   >
-                    {user.role}
+                    {user.isFraud ? "Fraud" : user.role}
                   </span>
                 </td>
 
@@ -107,12 +110,16 @@ const ManageUsers = () => {
                     )}
 
                     {/* If vendor */}
-                    {user.role === "vendor" && !user.isFraud && (
+                    {user.role === "vendor" && (
                       <button
-                        onClick={() => handleFraud(user._id)}
-                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                        onClick={() => handleFraud(user)}
+                        className={`px-3 py-1 text-white rounded ${
+                          user.isFraud
+                            ? "bg-green-500 hover:bg-green-600"
+                            : "bg-red-500 hover:bg-red-600"
+                        }`}
                       >
-                        Mark as Fraud
+                        {user.isFraud ? "Unmark Fraud" : "Mark as Fraud"}
                       </button>
                     )}
                   </div>

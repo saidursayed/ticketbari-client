@@ -13,7 +13,7 @@ const AddedTickets = () => {
   const {
     data: tickets = [],
     isLoading,
-    refetch,
+    // refetch,
   } = useQuery({
     queryKey: ["tickets", user?.email],
     queryFn: async () => {
@@ -34,19 +34,6 @@ const AddedTickets = () => {
           key={ticket._id}
           className="bg-white rounded-2xl shadow-md overflow-hidden border hover:shadow-lg transition relative"
         >
-          {/* Verification Status Badge */}
-          <span
-            className={`absolute top-3 left-3 px-3 py-1 rounded-full text-sm font-semibold ${
-              ticket.verificationStatus === "approved"
-                ? "bg-green-100 text-green-700"
-                : ticket.verificationStatus === "rejected"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-yellow-100 text-yellow-700"
-            }`}
-          >
-            {ticket.verificationStatus}
-          </span>
-
           {/* Ticket Image */}
           <div className="relative">
             <img
@@ -54,14 +41,24 @@ const AddedTickets = () => {
               alt={ticket.ticketTitle}
               className="h-48 w-full object-cover"
             />
-            <span className="absolute top-3 right-3 bg-[#CEB45F]/20 text-[#CEB45F] px-3 py-1 rounded-full text-sm font-medium">
+
+            {/* ✅ Status Badge */}
+            <span
+              className={`absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-sm font-semibold ${
+                ticket.verificationStatus === "approved"
+                  ? "bg-green-100 text-green-700"
+                  : ticket.verificationStatus === "rejected"
+                    ? "bg-red-100 text-red-700"
+                    : "bg-yellow-100 text-yellow-700"
+              }`}
+            >
+              {ticket.verificationStatus}
+            </span>
+
+            {/* Transport Badge */}
+            <span className="absolute top-3 right-3 z-20 bg-[#CEB45F]/20 text-[#CEB45F] px-3 py-1 rounded-full text-sm font-medium">
               {ticket.transport}
             </span>
-            <div className="absolute bottom-3 left-3 text-white">
-              <h2 className="text-xl font-bold drop-shadow">
-                {ticket.ticketTitle}
-              </h2>
-            </div>
           </div>
 
           {/* Ticket Info */}
