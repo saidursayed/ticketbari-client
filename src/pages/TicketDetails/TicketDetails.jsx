@@ -8,10 +8,12 @@ import { LuCalendarClock } from "react-icons/lu";
 import { MdAcUnit, MdEmail } from "react-icons/md";
 import { useParams } from "react-router";
 import CountdownTimer from "../../components/Shared/CountdownTimer/CountdownTimer";
+import BookingModal from "../../components/Modal/BookingModal/BookingModal";
 
 const TicketDetails = () => {
   const { id } = useParams();
   const [isExpired, setIsExpired] = useState(false);
+  let [isOpen, setIsOpen] = useState(false);
 
   const { data: ticket = {}, isLoading } = useQuery({
     queryKey: ["ticket", id],
@@ -22,8 +24,6 @@ const TicketDetails = () => {
       return result.data;
     },
   });
-
-  console.log(id, ticket);
 
   if (isLoading) return <span>Loading...</span>;
   if (!ticket) return <p>No data found</p>;
@@ -43,7 +43,7 @@ const TicketDetails = () => {
     vendorEmail,
     verificationStatus,
   } = ticket;
-  
+
   return (
     <div className="space-y-8 py-8">
       {/* 🔝 Banner */}
@@ -216,18 +216,9 @@ const TicketDetails = () => {
           </div>
 
           {/* Button */}
-          {/* <button
-              disabled={ticket.status === "Departed"}
-              className={`w-full py-2 rounded-lg text-white font-medium ${
-                ticket.status === "Departed"
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-orange-500 hover:bg-orange-600"
-              }`}
-            >
-              {ticket.status === "Departed" ? "Departed" : "Book Now"}
-            </button> */}
 
           <button
+            onClick={() => setIsOpen(true)}
             disabled={ticketQuantity === 0 || isExpired}
             className={`w-full py-2 rounded-lg text-white ${
               ticketQuantity === 0 || isExpired
@@ -235,8 +226,14 @@ const TicketDetails = () => {
                 : "bg-orange-500 hover:bg-orange-600"
             }`}
           >
-            {ticketQuantity === 0 || isExpired ? "Cannot Book" : "Book Now"}
+            {ticketQuantity === 0 || isExpired ? "Departed Cannot Book" : "Book Now"}
           </button>
+         
+          <BookingModal
+            ticket={ticket}
+            closeModal={() => setIsOpen(false)}
+            isOpen={isOpen}
+          ></BookingModal>
         </div>
       </div>
     </div>

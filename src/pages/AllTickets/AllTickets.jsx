@@ -45,7 +45,7 @@ const AllTickets = () => {
             </div>
           )}
           {tickets.map((ticket) => (
-            <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-primary hover:shadow-lg transition">
+            <div key={ticket._id} className="bg-white rounded-2xl shadow-md overflow-hidden border border-primary hover:shadow-lg transition">
               {/* Image */}
               <div className="relative">
                 <img
