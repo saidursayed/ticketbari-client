@@ -24,6 +24,7 @@ const TicketDetails = () => {
       return result.data;
     },
   });
+  console.log(ticket)
 
   if (isLoading) return <span>Loading...</span>;
   if (!ticket) return <p>No data found</p>;

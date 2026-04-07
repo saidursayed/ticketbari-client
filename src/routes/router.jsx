@@ -10,7 +10,7 @@ import BookedTickets from "../pages/Dashboard/User/BookedTickets";
 import TransactionHistory from "../pages/Dashboard/User/TransactionHistory";
 import AddTicket from "../pages/Dashboard/Vendor/AddTicket";
 import AddedTickets from "../pages/Dashboard/Vendor/AddedTickets";
-import BookingRequests from "../pages/Dashboard/Vendor/BookingRequests";
+import RequestedBookings from "../pages/Dashboard/Vendor/RequestedBookings";
 import RevenueOverview from "../pages/Dashboard/Vendor/RevenueOverview";
 import ManageTickets from "../pages/Dashboard/Admin/ManageTickets";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "booking-requests",
-        element: <BookingRequests></BookingRequests>,
+        element: <RequestedBookings></RequestedBookings>,
       },
       {
         path: "revenue-overview",
