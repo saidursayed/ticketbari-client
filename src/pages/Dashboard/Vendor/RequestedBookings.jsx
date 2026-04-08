@@ -25,17 +25,27 @@ const RequestedBookings = () => {
       const res = await axiosSecure.patch(`/bookings/status/${id}`, { status });
       return res.data;
     },
-    onSuccess: () => {
-      toast.success("Status updated");
+
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
     },
-    onError: () => {
-      toast.error("Failed to update status");
+
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || err.message);
     },
   });
 
   const handleStatusUpdate = async (id, status) => {
     await mutateAsync({ id, status });
     refetch();
+  };
+
+  const isExpired = (departureDateTime) => {
+    return new Date(departureDateTime) < new Date();
   };
 
   if (isPending) return <span>Loadinges....</span>;
@@ -78,14 +88,18 @@ const RequestedBookings = () => {
                 <td>
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      booking.status === "pending"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : booking.status === "accepted"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                      isExpired(booking.departureDateTime)
+                        ? "bg-gray-200 text-gray-600"
+                        : booking.status === "pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : booking.status === "accepted"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                     }`}
                   >
-                    {booking.status}
+                    {isExpired(booking.departureDateTime)
+                      ? "expired"
+                      : booking.status}
                   </span>
                 </td>
 
@@ -95,11 +109,13 @@ const RequestedBookings = () => {
                     onClick={() => handleStatusUpdate(booking._id, "accepted")}
                     disabled={
                       booking.status === "accepted" ||
-                      booking.status === "cancelled_by_admin"
+                      booking.status === "cancelled_by_admin" ||
+                      isExpired(booking.departureDateTime)
                     }
                     className={`px-3 py-1 rounded text-white ${
                       booking.status === "accepted" ||
-                      booking.status === "cancelled_by_admin"
+                      booking.status === "cancelled_by_admin" ||
+                      isExpired(booking.departureDateTime)
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-green-500 hover:bg-green-600"
                     }`}
@@ -111,11 +127,13 @@ const RequestedBookings = () => {
                     onClick={() => handleStatusUpdate(booking._id, "rejected")}
                     disabled={
                       booking.status === "rejected" ||
-                      booking.status === "cancelled_by_admin"
+                      booking.status === "cancelled_by_admin" ||
+                      isExpired(booking.departureDateTime)
                     }
                     className={`px-3 py-1 rounded text-white ${
                       booking.status === "rejected" ||
-                      booking.status === "cancelled_by_admin"
+                      booking.status === "cancelled_by_admin" ||
+                      isExpired(booking.departureDateTime)
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-red-500 hover:bg-red-600"
                     }`}
