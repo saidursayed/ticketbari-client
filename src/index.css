@@ -9,12 +9,24 @@
   name: "light";
   default: true;
   /* --color-primary: #ffa633;  */
-  --color-primary: #CEB45F; 
+  /* --color-primary: #CEB45F;  */
   
-  --color-secondary: #002c3f;
+  /* --color-secondary: #002c3f; */
 
   /* --color-base-content: #2E2ddd; */
   /* --color-neutral-content: #dadada; */
+
+  --color-base-100: #FBFCFD;
+  --color-base-200: #edf3f8;
+  --color-base-300: #F9FBFC;
+  --color-info-content: #F6F9FB;
+  
+  --color-primary: #0073d5;
+  --color-primary-content: #030712;
+  --color-secondary-content: #5d646f;
+  --color-accent: #00bb87;
+  
+
 }
 
 * {

@@ -110,11 +110,13 @@ const RequestedBookings = () => {
                     disabled={
                       booking.status === "accepted" ||
                       booking.status === "cancelled_by_admin" ||
+                      booking.status === "paid" ||
                       isExpired(booking.departureDateTime)
                     }
                     className={`px-3 py-1 rounded text-white ${
                       booking.status === "accepted" ||
                       booking.status === "cancelled_by_admin" ||
+                      booking.status === "paid"  ||
                       isExpired(booking.departureDateTime)
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-green-500 hover:bg-green-600"
@@ -128,11 +130,13 @@ const RequestedBookings = () => {
                     disabled={
                       booking.status === "rejected" ||
                       booking.status === "cancelled_by_admin" ||
+                      booking.status === "paid" ||
                       isExpired(booking.departureDateTime)
                     }
                     className={`px-3 py-1 rounded text-white ${
                       booking.status === "rejected" ||
                       booking.status === "cancelled_by_admin" ||
+                      booking.status === "paid" ||
                       isExpired(booking.departureDateTime)
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-red-500 hover:bg-red-600"

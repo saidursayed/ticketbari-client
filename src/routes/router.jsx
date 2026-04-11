@@ -17,6 +17,7 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AdvertiseTickets from "../pages/Dashboard/Admin/AdvertiseTickets";
 import AllTickets from "../pages/AllTickets/AllTickets";
 import TicketDetails from "../pages/TicketDetails/TicketDetails";
+import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -30,11 +31,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets",
-        Component: AllTickets
+        Component: AllTickets,
       },
       {
         path: "/tickets/:id",
-        Component: TicketDetails
+        Component: TicketDetails,
       },
       {
         path: "/register",
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/payment-success",
+        Component: PaymentSuccess,
       },
     ],
   },
