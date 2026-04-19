@@ -1,19 +1,22 @@
+import { MapPin, Calendar, Clock, Train, Check, Info } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
-import { FaArrowRight, FaRegCalendarAlt, FaStore } from "react-icons/fa";
-import { FaBusSimple, FaLocationDot, FaTicket } from "react-icons/fa6";
-import { IoTicketOutline } from "react-icons/io5";
-import { LuCalendarClock } from "react-icons/lu";
-import { MdAcUnit, MdEmail } from "react-icons/md";
-import { useParams } from "react-router";
-import CountdownTimer from "../../components/Shared/CountdownTimer/CountdownTimer";
+import { Link, useNavigate, useParams } from "react-router";
 import BookingModal from "../../components/Modal/BookingModal/BookingModal";
+import { FaArrowLeft, FaStore } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import Container from "../../components/Shared/Container/Container";
+import { LuBus, LuPlane, LuUsers } from "react-icons/lu";
+import Countdown from "react-countdown";
+import { IoBoatOutline } from "react-icons/io5";
+import { PiTrain } from "react-icons/pi";
 
 const TicketDetails = () => {
   const { id } = useParams();
   const [isExpired, setIsExpired] = useState(false);
   let [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { data: ticket = {}, isLoading } = useQuery({
     queryKey: ["ticket", id],
@@ -24,7 +27,21 @@ const TicketDetails = () => {
       return result.data;
     },
   });
-  console.log(ticket)
+
+  const dateObj = new Date(ticket.departureDateTime);
+
+  const date = dateObj.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const time = dateObj.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
 
   if (isLoading) return <span>Loading...</span>;
   if (!ticket) return <p>No data found</p>;
@@ -42,201 +59,282 @@ const TicketDetails = () => {
     departureDateTime,
     vendorName,
     vendorEmail,
-    verificationStatus,
   } = ticket;
 
   return (
-    <div className="space-y-8 py-8">
-      {/* 🔝 Banner */}
-      <div className="relative h-100 rounded-2xl overflow-hidden">
-        <img src={ticketImage} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6 text-white">
-          <h1 className="text-2xl font-bold">{ticketTitle}</h1>
-          {/* <p className="flex items-center gap-2 text-sm mt-1">
-              <MdLocationOn /> {from} → {to}
-            </p> */}
-        </div>
-      </div>
-
-      {/* 🔽 Main Grid */}
-      <div className="grid md:grid-cols-3 gap-8">
-        {/* LEFT */}
-        <div className="md:col-span-2 space-y-6">
-          {/* Journey Info */}
-          <div className="bg-white p-4 rounded-xl shadow space-y-4">
-            <h2 className="text-2xl font-bold mb-3 flex items-center gap-1">
-              <FaTicket className="text-primary" />
-              <span className="text-secondary">Ticket Details</span>
-            </h2>
-            <div className="flex justify-between items-center bg-[#ECF4F5] rounded-lg p-3">
-              <div className="flex items-center gap-2">
-                <div>
-                  <FaLocationDot size={30} className="text-[#FF700A]" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">From</p>
-                  <h3 className="font-semibold text-xl">{from}</h3>
-                </div>
-              </div>
-
-              <FaArrowRight className="text-[#FF700A]" />
-
-              <div>
-                <p className="text-sm text-gray-500">To</p>
-                <h3 className="font-semibold text-xl">{to}</h3>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-3 text-sm">
-              <div className="bg-[#ECF4F5] p-3 rounded flex items-center gap-2">
-                <div>
-                  <FaRegCalendarAlt size={30} className="text-[#127384]" />
-                </div>
-                <div>
-                  <p className="text-gray-500">Departure Time</p>
-
-                  <p className="font-medium text-base text-secondary">
-                    {departureDateTime}
-                  </p>
-                </div>
-              </div>
-              <div className="bg-[#ECF4F5] p-3 rounded flex items-center gap-2">
-                <div>
-                  <LuCalendarClock size={30} className="text-[#127384]" />
-                </div>
-                <div>
-                  <p className="text-gray-500">Departure Time</p>
-                  <p className="font-medium text-base text-secondary">
-                    <CountdownTimer
-                      departureDateTime={departureDateTime}
-                      onExpire={() => setIsExpired(true)}
-                    ></CountdownTimer>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="font-semibold text-secondary text-xl mb-3">
-                Included Perks
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                <MdAcUnit></MdAcUnit>
-                {perks.map((perk, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 bg-[#ECF4F5] rounded-full text-sm font-medium"
-                  >
-                    {perk}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Amenities */}
-
-          {/* Operator Info */}
-
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
-            {/* Title */}
-            <h2 className="text-lg font-semibold text-gray-800 mb-5">
-              Vendor Information
-            </h2>
-
-            {/* Content */}
-            <div className="flex items-center justify-between gap-3">
-              {/* Vendor Name */}
-              <div className="flex-1 bg-[#ECF4F5] p-3 rounded flex items-center gap-1.5">
-                <div className="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
-                  <FaStore />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Vendor Name</p>
-                  <p className="text-sm font-medium text-gray-800">
-                    {vendorName}
-                  </p>
-                </div>
-              </div>
-
-              {/* Vendor Email */}
-              <div className="flex-1 bg-[#ECF4F5] p-3 rounded flex items-center gap-1.5">
-                <div className="bg-gray-100 text-gray-600 p-2 rounded-lg">
-                  <MdEmail />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Email Address</p>
-                  <p className="text-sm font-medium text-gray-700">
-                    {vendorEmail}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="bg-white p-5 rounded-xl shadow space-y-4 h-fit">
-          <div>
-            <p className="text-secondary text-xl capitalize font-semibold">
-              Price per Ticket
-            </p>
-            <h2 className="text-2xl font-bold text-primary">${ticketPrice}</h2>
-          </div>
-
-          <div className="flex justify-between text-sm bg-[#ECF4F5] p-3 rounded items-center">
-            <div className="flex items-center gap-1.5">
-              <IoTicketOutline className="text-[#FF700A]" size={24} />
-              <span className="text-base text-secondary font-semibold">
-                Available Tickets
-              </span>
-            </div>
-            <span className="text-green-600 font-bold text-base">
-              {ticketQuantity}
-            </span>
-          </div>
-
-          <div className="flex justify-between text-sm bg-[#ECF4F5] p-3 rounded items-center">
-            <div className="flex items-center gap-1.5">
-              <FaBusSimple className="text-[#850883]" size={24} />
-              <span className="text-base text-secondary font-semibold">
-                Transport
-              </span>
-            </div>
-            <span className=" font-bold text-base">{transport}</span>
-          </div>
-
-          <div className="flex justify-between text-sm bg-[#ECF4F5] p-3 rounded items-center">
-            <div className="flex items-center gap-1.5">
-              {/* <FaBusSimple className="text-[#850883]" size={24} /> */}
-              <span className="text-base text-secondary font-semibold">
-                Status
-              </span>
-            </div>
-            <span className=" font-bold text-base">{verificationStatus}</span>
-          </div>
-
-          {/* Button */}
-
-          <button
-            onClick={() => setIsOpen(true)}
-            disabled={ticketQuantity === 0 || isExpired}
-            className={`w-full py-2 rounded-lg text-white ${
-              ticketQuantity === 0 || isExpired
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-orange-500 hover:bg-orange-600"
-            }`}
+    <div className="bg-base-100 py-16">
+      <Container>
+        <div>
+          {/* Back Button */}
+          <Link
+            onClick={() => navigate(-1)}
+            className="flex items-center text-sm font-medium text-primary-content mb-6 hover:text-primary transition-colors cursor-pointer"
           >
-            {ticketQuantity === 0 || isExpired ? "Departed Cannot Book" : "Book Now"}
-          </button>
-         
-          <BookingModal
-            ticket={ticket}
-            closeModal={() => setIsOpen(false)}
-            isOpen={isOpen}
-          ></BookingModal>
+            <span className="mr-1">
+              <FaArrowLeft></FaArrowLeft>
+            </span>{" "}
+            Back to Tickets
+          </Link>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column: Image and Details */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Hero Image Section */}
+              <div className="relative rounded-2xl overflow-hidden shadow-lg h-110 group">
+                <img
+                  src={ticketImage}
+                  alt={ticketTitle}
+                  className="w-full h-full object-cover transform group-hover:scale-104 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute top-4 left-4">
+                  {transport === "Bus" && (
+                    <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                      <LuBus size={16} />
+                      <span className="text-sm font-medium">Bus</span>
+                    </div>
+                  )}
+
+                  {transport === "Train" && (
+                    <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                      <PiTrain size={16} />
+                      <span className="text-sm font-medium">Train</span>
+                    </div>
+                  )}
+
+                  {transport === "Launch" && (
+                    <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                      <IoBoatOutline size={16} />
+                      <span className="text-sm font-medium">Launch</span>
+                    </div>
+                  )}
+
+                  {transport === "Plane" && (
+                    <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                      <LuPlane size={16} />
+                      <span className="text-sm font-medium">Plane</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Main Info Card */}
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <h1 className="text-2xl font-semibold text-primary-content mb-8">
+                  {ticketTitle}
+                </h1>
+
+                {/* Route Section */}
+                <div className="flex items-center justify-between bg-base-200 p-6 rounded-xl mb-6 relative">
+                  <div>
+                    <p className="text-xs text-secondary-content font-semibold uppercase mb-1">
+                      From
+                    </p>
+                    <h2 className="text-xl font-semibold text-primary-content">
+                      {from}
+                    </h2>
+                  </div>
+
+                  <div className="absolute left-1/2 -translate-x-1/2 bg-primary/10 p-2 rounded-full">
+                    <MapPin className="text-primary" size={20} />
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-xs text-secondary-content font-semibold uppercase mb-1">
+                      To
+                    </p>
+                    <h2 className="text-xl font-semibold text-primary-content">
+                      {to}
+                    </h2>
+                  </div>
+                </div>
+
+                {/* Date and Time Section */}
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="bg-base-200 p-4 rounded-xl flex items-center gap-3">
+                    <div className="text-primary">
+                      <Calendar size={24} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-secondary-content font-bold uppercase">
+                        Departure Date
+                      </p>
+                      <p className="text-sm font-semibold text-primary-content">
+                        {date}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-base-200 p-4 rounded-xl flex items-center gap-3">
+                    <div className="text-primary">
+                      <Clock size={24} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-secondary-content font-bold uppercase">
+                        Departure Time
+                      </p>
+                      <p className="text-sm font-semibold text-primary-content">
+                        {time}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Included Perks */}
+                <div className="mb-8">
+                  <p className="font-bold text-primary-content mb-3">
+                    Included Perks:
+                  </p>
+                  <div className="flex gap-3">
+                    {perks.map((perk) => (
+                      <div
+                        key={perk}
+                        className="flex items-center gap-1 bg-base-200 px-3 py-1 rounded-full text-[11px] font-bold text-primary-content/70"
+                      >
+                        <Check size={14} className="text-primary" /> {perk}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                {/* Title */}
+                <h2 className="text-lg font-semibold text-primary-content mb-5">
+                  Vendor Information
+                </h2>
+
+                {/* Content */}
+                <div className="flex items-center justify-between gap-3">
+                  {/* Vendor Name */}
+                  <div className="flex-1 bg-base-200 p-3 rounded flex items-center gap-1.5">
+                    <div className="bg-primary/10 text-primary p-2 rounded-lg">
+                      <FaStore />
+                    </div>
+                    <div>
+                      <p className="text-xs text-secondary-content font-medium">
+                        Vendor Name
+                      </p>
+                      <p className="text-sm font-semibold text-primary-content">
+                        {vendorName}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Vendor Email */}
+                  <div className="flex-1 bg-base-200 p-3 rounded flex items-center gap-1.5">
+                    <div className="bg-primary/10 text-primary p-2 rounded-lg">
+                      <MdEmail />
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-secondary-content">
+                        Email Address
+                      </p>
+                      <p className="text-sm font-semibold text-primary-content">
+                        {vendorEmail}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Widgets */}
+            <div className="space-y-6">
+              {/* Countdown Widget */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="flex items-center gap-2 mb-4">
+                  <Clock size={18} className="text-primary" />
+                  <h3 className="font-bold text-primary-content">
+                    Departure Countdown
+                  </h3>
+                </div>
+
+                <Countdown
+                  date={new Date(departureDateTime)}
+                  onComplete={() => setIsExpired(true)}
+                  renderer={({ days, hours, minutes, seconds, completed }) => {
+                    if (completed) {
+                      return (
+                        <span className="text-red-500 font-bold bg-base-200 p-4 block rounded-lg">
+                          Departed
+                        </span>
+                      );
+                    }
+
+                    const timeData = [
+                      { val: days, label: "Days" },
+                      { val: hours, label: "Hours" },
+                      { val: minutes, label: "Mins" },
+                      { val: seconds, label: "Secs" },
+                    ];
+
+                    return (
+                      <div className="grid grid-cols-4 gap-2 text-center">
+                        {timeData.map((t) => (
+                          <div
+                            key={t.label}
+                            className="bg-primary/10 p-2 rounded-lg"
+                          >
+                            <p className="text-xl font-bold text-primary">
+                              {t.val}
+                            </p>
+                            <p className="text-xs font-semibold text-secondary-content uppercase">
+                              {t.label}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }}
+                />
+              </div>
+
+              {/* Booking Widget */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 className="font-bold text-primary-content mb-6 text-lg">
+                  Book This Ticket
+                </h3>
+
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-sm text-primary-content/60 font-semibold">
+                    Price per ticket
+                  </span>
+                  <span className="text-2xl font-bold text-primary">
+                    {ticketPrice}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center bg-base-200 px-4 py-3 rounded-lg mb-6 border border-gray-100">
+                  <div className="flex items-center gap-2 text-primary-content/80">
+                    <LuUsers size={16} />
+                    <span className="text-xs font-semibold uppercase">
+                      Available
+                    </span>
+                  </div>
+                  <span className="text-sm font-bold text-primary-content">
+                    {ticketQuantity} tickets
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setIsOpen(true)}
+                  disabled={ticketQuantity === 0 || isExpired}
+                  className={`w-full text-white py-2.5 rounded-lg font-bold transition-all shadow-md cursor-pointer ${ticketQuantity === 0 || isExpired ? "bg-secondary-content/50 cursor-not-allowed" : "bg-primary hover:bg-primary/90 "}`}
+                >
+                  {ticketQuantity === 0 || isExpired
+                    ? "Departed Cannot Book"
+                    : "Book Now"}
+                </button>
+
+                <BookingModal
+                  ticket={ticket}
+                  closeModal={() => setIsOpen(false)}
+                  isOpen={isOpen}
+                ></BookingModal>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

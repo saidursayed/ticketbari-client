@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div className=" fixed w-full backdrop-blur-md bg-white/20 border-b border-white/30 z-100 shadow-sm">
       <Container>
-        <div className="navbar m-0 p-0 py-4">
+        <div className="navbar m-0 p-0 py-3">
           <div className="navbar-start">
             <div className="dropdown">
               <div

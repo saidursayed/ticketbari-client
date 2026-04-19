@@ -12,8 +12,8 @@ const MenuItem = ({ label, address, icon: Icon }) => {
           
           ${
             isActive
-              ? "text-[#EFF3F4] bg-[#CEB45F] shadow-sm"
-              : "text-[#EFF3F4] hover:bg-[#CEB45F]/20 hover:text-[#CEB45F]"
+              ? "text-white bg-primary shadow-sm"
+              : "text-primary-content/70 hover:bg-primary/20 hover:text-primary"
           }
           `
         }
@@ -26,7 +26,7 @@ const MenuItem = ({ label, address, icon: Icon }) => {
         </div>
 
         {/* Label */}
-        <span className="text-base font-semibold is-drawer-close:hidden">
+        <span className="text-sm font-semibold is-drawer-close:hidden">
           {label}
         </span>
 

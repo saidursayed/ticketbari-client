@@ -6,6 +6,7 @@ import { imageUpload } from "../../../utils";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
+import { LucidePlus } from "lucide-react";
 
 const AddTicketForm = () => {
   const { user } = useAuth();
@@ -79,27 +80,40 @@ const AddTicketForm = () => {
   if (isPending) return <span>Loading...</span>;
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 p-4 px-20">
-      <div>
-        <h2 className="text-2xl font-bold text-center text-blue-600">
+    <div className="p-6">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-primary-content">
           Add New Ticket
-        </h2>
+        </h1>
+        <p className="text-primary-content/70 mt-1">
+          Create a new ticket listing for travelers
+        </p>
       </div>
+
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-xl rounded-2xl p-8 space-y-6 max-w-4xl mx-auto"
+          className="bg-white shadow-xl rounded-2xl p-8 space-y-6 border-[1.5px] border-accent-content"
         >
+          <div>
+            <h2 className="text-primary-content font-semibold text-lg flex items-center gap-0.5">
+              <LucidePlus></LucidePlus> <span>Ticket Details</span>
+            </h2>
+            <p className="text-sm font-medium text-primary-content/70 mt-1">
+              Fill in the details for you new ticket listing
+            </p>
+          </div>
+
           {/* Title */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-secondary">
+            <label className="text-sm font-semibold text-primary-content">
               Ticket Title
             </label>
             <input
               {...register("ticketTitle", { required: true })}
               placeholder="Enter ticket title"
-              className="w-full px-4 py-3 rounded-xl border border-gray-300 
-      focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+              className="input-style"
             />
             {errors.ticketTitle && (
               <p className="text-red-500 text-sm mt-1">
@@ -111,7 +125,7 @@ const AddTicketForm = () => {
           {/* From - To */}
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="text-sm font-semibold text-secondary">
+              <label className="text-sm font-semibold text-primary-content">
                 From
               </label>
               <input
@@ -125,7 +139,9 @@ const AddTicketForm = () => {
             </div>
 
             <div>
-              <label className="text-sm font-semibold text-secondary">To</label>
+              <label className="text-sm font-semibold text-primary-content">
+                To
+              </label>
               <input
                 {...register("to", { required: true })}
                 placeholder="Destination city"
@@ -137,30 +153,32 @@ const AddTicketForm = () => {
             </div>
           </div>
 
-          {/* Transport */}
-          <div>
-            <label className="text-sm font-semibold text-secondary">
-              Transport
-            </label>
-            <select
-              {...register("transport", { required: true })}
-              className="input-style"
-            >
-              <option value="">Select Transport</option>
-              <option value="Bus">🚌 Bus</option>
-              <option value="Train">🚆 Train</option>
-              <option value="Flight">✈️ Flight</option>
-              <option value="Launch">🚢 Launch</option>
-            </select>
-            {errors.transport && (
-              <p className="text-red-500 text-sm mt-1">Transport is required</p>
-            )}
-          </div>
-
-          {/* Price & Quantity */}
           <div className="grid md:grid-cols-2 gap-5">
+            {/* Transport */}
             <div>
-              <label className="text-sm font-semibold text-secondary">
+              <label className="text-sm font-semibold text-primary-content">
+                Transport
+              </label>
+              <select
+                {...register("transport", { required: true })}
+                className="input-style"
+              >
+                <option value="">Select Transport</option>
+                <option value="Bus">🚌 Bus</option>
+                <option value="Train">🚆 Train</option>
+                <option value="Flight">✈️ Flight</option>
+                <option value="Launch">🚢 Launch</option>
+              </select>
+              {errors.transport && (
+                <p className="text-red-500 text-sm mt-1">
+                  Transport is required
+                </p>
+              )}
+            </div>
+
+            {/* Price  */}
+            <div>
+              <label className="text-sm font-semibold text-primary-content">
                 Ticket Price
               </label>
               <input
@@ -175,9 +193,12 @@ const AddTicketForm = () => {
                 </p>
               )}
             </div>
+          </div>
 
+          {/* Date & Quantity */}
+          <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="text-sm font-semibold text-secondary">
+              <label className="text-sm font-semibold text-primary-content">
                 Ticket Quantity
               </label>
               <input
@@ -192,23 +213,23 @@ const AddTicketForm = () => {
                 </p>
               )}
             </div>
-          </div>
 
-          {/* Date */}
-          <div>
-            <label className="text-sm font-semibold text-secondary">
-              Departure date & time
-            </label>
-            <input
-              type="datetime-local"
-              {...register("departureDateTime", { required: true })}
-              className="input-style"
-            />
-            {errors.departureDateTime && (
-              <p className="text-red-500 text-sm mt-1">
-                Departure date & time is required
-              </p>
-            )}
+            {/* Date */}
+            <div>
+              <label className="text-sm font-semibold text-primary-content">
+                Departure date & time
+              </label>
+              <input
+                type="datetime-local"
+                {...register("departureDateTime", { required: true })}
+                className="input-style"
+              />
+              {errors.departureDateTime && (
+                <p className="text-red-500 text-sm mt-1">
+                  Departure date & time is required
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Perks */}
@@ -216,7 +237,22 @@ const AddTicketForm = () => {
             <label className="text-sm font-semibold text-gray-700">Perks</label>
 
             <div className="flex flex-wrap gap-3 mt-3">
-              {["AC", "Breakfast", "Wifi", "Charging"].map((perk) => (
+              {[
+                "AC",
+                "Wifi",
+                "Snacks",
+                "Breakfast",
+                "Lunch",
+                "Dinner",
+                "Meal Included",
+                "Reclining Seats",
+                "Sleeper",
+                "Blanket",
+                "Pillow",
+                "Entertainment",
+                "Baggage",
+                "Cabin",
+              ].map((perk) => (
                 <label
                   key={perk}
                   className="flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer hover:bg-blue-50 transition"
@@ -254,7 +290,7 @@ const AddTicketForm = () => {
               <input
                 type="file"
                 {...register("ticketImage", { required: "Image is required" })}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-white file:bg-blue-500 file:hover:bg-blue-700 file:transition-all file:cursor-pointer file:shadow-sm border border-dashed border-gray-300 p-2 bg-gray-50 rounded-xl"
+                className="block w-full text-sm text-secondary-content file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-white file:bg-primary file:hover:bg-primary/80 file:transition-all file:cursor-pointer file:shadow-sm border-[1.5px] border-dashed border-accent-content p-3 bg-info-content rounded-xl"
               />
             </div>
 
@@ -268,25 +304,25 @@ const AddTicketForm = () => {
           {/* Vendor */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-semibold text-secondary">
+              <label className="text-sm font-semibold text-primary-content">
                 Vendor Name
               </label>
               <input
                 value={user?.displayName || ""}
                 readOnly
                 {...register("vendorName", { required: true })}
-                className="input-style bg-gray-100"
+                className="input-style bg-info-content font-medium"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-secondary">
+              <label className="text-sm font-semibold text-primary-content">
                 Vendor Email
               </label>
               <input
                 value={user?.email || ""}
                 readOnly
                 {...register("vendorEmail", { required: true })}
-                className="input-style bg-gray-100"
+                className="input-style bg-info-content font-medium"
               />
             </div>
           </div>
@@ -294,13 +330,9 @@ const AddTicketForm = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
+            className="w-full bg-primary/90 hover:bg-primary text-white py-3 rounded-xl font-semibold transition cursor-pointer flex items-center justify-center gap-1"
           >
-            {isPending ? (
-              <TbFidgetSpinner className="animate-spin mx-auto" />
-            ) : (
-              "Add Ticket"
-            )}
+            <LucidePlus size={20}></LucidePlus> <span>Add Ticket</span>
           </button>
         </form>
       </div>

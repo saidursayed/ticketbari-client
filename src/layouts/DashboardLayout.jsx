@@ -13,13 +13,13 @@ const DashboardLayout = () => {
   const { user, logOut } = useAuth();
 
   return (
-    <div className="drawer lg:drawer-open bg-[#F8FAFC]">
+    <div className="drawer lg:drawer-open bg-base-100">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* ================= CONTENT ================= */}
       <div className="drawer-content flex flex-col">
         {/* 🔝 PREMIUM NAVBAR */}
-        <nav className="navbar sticky top-0 z-50 px-4 lg:px-6 backdrop-blur-md bg-white/70 border-b border-gray-200">
+        <nav className="navbar sticky top-0 z-50 px-4 lg:px-6 backdrop-blur-md bg-base-100 border-b border-gray-200">
           {/* Left */}
           <div className="navbar-start">
             <label
@@ -72,8 +72,8 @@ const DashboardLayout = () => {
         </nav>
 
         {/* 📦 PAGE CONTENT */}
-        <div className="p-4 lg:p-6">
-          <div className="bg-white rounded-2xl shadow-sm p-4 lg:p-6 min-h-[calc(100vh-100px)]">
+        <div className="bg-white p-4 lg:p-6">
+          <div className="bg-base-100 rounded-2xl shadow-sm  min-h-[calc(100vh-100px)]">
             <Outlet />
           </div>
         </div>
@@ -83,7 +83,7 @@ const DashboardLayout = () => {
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
-        <div className="flex min-h-full flex-col bg-[#002141] border-r border-gray-200 shadow-sm is-drawer-close:w-16 is-drawer-open:w-64 transition-all duration-300">
+        <div className="flex min-h-full flex-col bg-info-content border-r border-gray-200 shadow-sm is-drawer-close:w-16 is-drawer-open:w-64 transition-all duration-300">
           {/* 🔰 LOGO */}
           <div className="flex items-center justify-center py-4">
             <Link to="/">

@@ -66,6 +66,7 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
     const bookingData = {
       ticketId: _id,
       userEmail: user.email,
+      userName: user.displayName,
       vendorEmail,
 
       ticketTitle,

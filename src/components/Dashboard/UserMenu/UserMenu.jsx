@@ -1,5 +1,5 @@
 import React from "react";
-import { MdAttachMoney } from "react-icons/md";
+import { LuReceipt } from "react-icons/lu";
 import { LuTicketCheck } from "react-icons/lu";
 import MenuItem from "../MenuItem/MenuItem";
 
@@ -12,7 +12,7 @@ const UserMenu = () => {
         address="booked-tickets"
       />
       <MenuItem
-        icon={MdAttachMoney}
+        icon={LuReceipt}
         label="Transaction History"
         address="transaction-history"
       />
