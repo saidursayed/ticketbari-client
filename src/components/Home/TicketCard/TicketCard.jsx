@@ -22,8 +22,6 @@ const TicketCard = ({ ticket }) => {
     hour12: true,
   });
 
-
-
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group overflow-hidden border border-accent-content flex flex-col h-full">
       {/* Image */}
@@ -34,8 +32,14 @@ const TicketCard = ({ ticket }) => {
           className="h-52 w-full object-cover transform group-hover:scale-104 transition-transform duration-500 ease-out"
         />
 
+        {ticket.isAdvertised && (
+          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-white text-sm font-semibold px-10 py-1 shadow-lg z-20">
+            Featured
+          </div>
+        )}
+
         {/* Transport Badge */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-3 right-3 z-10">
           {ticket.transport === "Bus" && (
             <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
               <LuBus size={16} />
@@ -83,17 +87,18 @@ const TicketCard = ({ ticket }) => {
             <h3 className="font-semibold">{ticket.to}</h3>
           </div>
 
-         
-
           {/* Info */}
           <div className="text-sm text-secondary-content space-y-2">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
-                <FaRegCalendarAlt size={18} className="text-primary"></FaRegCalendarAlt>
+                <FaRegCalendarAlt
+                  size={18}
+                  className="text-primary"
+                ></FaRegCalendarAlt>
                 {date}
               </div>
               <div className="flex items-center gap-1">
-                <LuClock  size={18} className="text-primary"></LuClock>
+                <LuClock size={18} className="text-primary"></LuClock>
                 {time}
               </div>
             </div>

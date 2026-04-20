@@ -14,7 +14,7 @@ import RequestedBookings from "../pages/Dashboard/Vendor/RequestedBookings";
 import RevenueOverview from "../pages/Dashboard/Vendor/RevenueOverview";
 import ManageTickets from "../pages/Dashboard/Admin/ManageTickets";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
-import AdvertiseTickets from "../pages/Dashboard/Admin/AdvertiseTickets";
+import AdvertiseTicketsAdmin from "../pages/Dashboard/Admin/AdvertiseTicketsAdmin";
 import AllTickets from "../pages/AllTickets/AllTickets";
 import TicketDetails from "../pages/TicketDetails/TicketDetails";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "advertise-tickets",
-        element: <AdvertiseTickets></AdvertiseTickets>,
+        element: <AdvertiseTicketsAdmin></AdvertiseTicketsAdmin>,
       },
     ],
   },

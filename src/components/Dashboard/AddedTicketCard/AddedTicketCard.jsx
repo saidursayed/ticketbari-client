@@ -32,9 +32,15 @@ const AddedTicketCard = ({ ticket }) => {
           className="h-48 w-full object-cover"
         />
 
+        {ticket.isAdvertised && (
+          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-white text-sm font-semibold px-10 py-1 shadow-lg z-20">
+            Featured
+          </div>
+        )}
+
         {/* ✅ Status Badge */}
         <span
-          className={`absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-sm font-semibold ${
+          className={`${ticket.isAdvertised && "left-18"} absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-sm font-semibold ${
             ticket.verificationStatus === "approved"
               ? "bg-green-100 text-green-700"
               : ticket.verificationStatus === "rejected"

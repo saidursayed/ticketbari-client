@@ -1,8 +1,7 @@
 import React from "react";
-import { LuTickets } from "react-icons/lu";
-import { MdOutlineManageAccounts } from "react-icons/md";
-import { GiTicket } from "react-icons/gi";
+import { LuTickets, LuUsers} from "react-icons/lu";
 import MenuItem from "../MenuItem/MenuItem";
+import { GoMegaphone } from "react-icons/go";
 
 const AdminMenu = () => {
   return (
@@ -13,12 +12,12 @@ const AdminMenu = () => {
         address="manage-tickets"
       />
       <MenuItem
-        icon={MdOutlineManageAccounts}
+        icon={LuUsers}
         label="Manage Users"
         address="manage-users"
       />
       <MenuItem
-        icon={GiTicket}
+        icon={GoMegaphone}
         label=" Advertise Tickets"
         address="advertise-tickets"
       />

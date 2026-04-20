@@ -51,7 +51,7 @@ const ManageUsers = () => {
   const handleFraud = async (user) => {
     try {
       const result = await axiosSecure.patch(`/users/fraud/${user._id}`, {
-        isFraud: true,
+        isFraud: false,
       });
 
       toast.success(result.data.message);
@@ -335,6 +335,7 @@ const ManageUsers = () => {
                       ) : (
                         <></>
                       )}
+                      
                     </div>
                   </td>
                 </tr>

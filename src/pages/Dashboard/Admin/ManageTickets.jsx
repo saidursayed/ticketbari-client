@@ -54,6 +54,7 @@ const ManageTickets = () => {
             All Tickets ({tickets.length})
           </h2>
         </div>
+        
         <div className="block lg:hidden space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {tickets.map((ticket) => (
@@ -165,6 +166,7 @@ const ManageTickets = () => {
             ))}
           </div>
         </div>
+
         <div className="overflow-x-auto hidden lg:block">
           <table className="w-full table  ">
             <thead className=" text-secondary-content text-sm ">
