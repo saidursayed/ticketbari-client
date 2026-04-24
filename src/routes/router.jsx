@@ -18,12 +18,13 @@ import AdvertiseTicketsAdmin from "../pages/Dashboard/Admin/AdvertiseTicketsAdmi
 import AllTickets from "../pages/AllTickets/AllTickets";
 import TicketDetails from "../pages/TicketDetails/TicketDetails";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    // errorElement: errorpage,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,

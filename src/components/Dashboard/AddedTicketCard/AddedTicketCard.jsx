@@ -5,10 +5,18 @@ import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router";
 import { IoBoatOutline } from "react-icons/io5";
 import { PiTrain } from "react-icons/pi";
-import { FiClock } from "react-icons/fi";
+import { FiClock, FiEdit, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { ArrowRight } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useState } from "react";
+import UpdateTicketModal from "../../Modal/UpdateTicketModal/UpdateTicketModal";
 
-const AddedTicketCard = ({ ticket }) => {
+const AddedTicketCard = ({ ticket, refetch }) => {
+  const axiosSecure = useAxiosSecure();
+  let [isOpen, setIsOpen] = useState(false);
+
   const dateObj = new Date(ticket.departureDateTime);
 
   const date = dateObj.toLocaleDateString("en-US", {
@@ -22,6 +30,49 @@ const AddedTicketCard = ({ ticket }) => {
     minute: "2-digit",
     hour12: true,
   });
+
+  const { mutateAsync: deleteTicket, isPending } = useMutation({
+    mutationFn: async (id) => {
+      const result = await axiosSecure.delete(`/ticket/${id}`);
+      return result.data;
+    },
+    onSuccess: () => {
+      //refetch
+      refetch();
+    },
+    onError: (error) => {
+      Swal.fire({
+        title: "Error!",
+        text: error?.response?.data?.message || "Failed to delete ticket ❌",
+        icon: "error",
+      });
+    },
+  });
+
+  const handleDeleteTicket = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteTicket(id);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Ticket has been deleted successfully ✅",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden border-[1.5px] border-accent-content hover:shadow-lg transition relative">
       {/* Ticket Image */}
@@ -148,25 +199,40 @@ const AddedTicketCard = ({ ticket }) => {
         <div className="border-t border-primary">
           <div className=" flex justify-between items-center mt-3 gap-4">
             <button
+              onClick={() => setIsOpen(true)}
               disabled={ticket.verificationStatus === "rejected"}
-              className={`flex-1 px-4 py-2 rounded-lg text-white font-semibold ${
+              className={`flex-1 flex  justify-center items-center gap-2 px-5 py-2 rounded-lg font-semibold border-[1.5px] border-accent-content transition ${
                 ticket.verificationStatus === "rejected"
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? "bg-gray-300 text-white cursor-not-allowed"
+                  : "text-primary hover:text-white hover:bg-primary cursor-pointer"
               }`}
             >
+              <FiEdit />
               Update
             </button>
+            <UpdateTicketModal
+              ticket={ticket}
+              closeModal={() => setIsOpen(false)}
+              isOpen={isOpen}
+            ></UpdateTicketModal>
 
             <button
-              disabled={ticket.verificationStatus === "rejected"}
-              className={`flex-1 px-4 py-2 rounded-lg text-white font-semibold ${
+              onClick={() => handleDeleteTicket(ticket._id)}
+              disabled={ticket.verificationStatus === "rejected" || isPending}
+              className={`flex-1 px-5 py-2 rounded-lg  font-semibold  flex items-center justify-center gap-2 border-[1.5px] border-accent-content transition ${
                 ticket.verificationStatus === "rejected"
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-red-600 hover:bg-red-700"
+                  ? "bg-gray-300 text-white cursor-not-allowed"
+                  : "text-red-600 hover:text-white hover:bg-red-600 cursor-pointer"
               }`}
             >
-              Delete
+              {isPending ? (
+                "Deleting..."
+              ) : (
+                <>
+                  <FiTrash2 />
+                  Delete
+                </>
+              )}
             </button>
           </div>
         </div>

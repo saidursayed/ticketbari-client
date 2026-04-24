@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const RevenueOverview = () => {
   const { user } = useAuth();
@@ -34,13 +35,13 @@ const RevenueOverview = () => {
     totalTicketsAdded = 0,
   } = revenueData || {};
 
-const data = [
-  { name: "Revenue", value: totalRevenue },
-  { name: "Tickets Sold", value: totalTicketsSold },
-  { name: "Tickets Added", value: totalTicketsAdded },
-];
+  const data = [
+    { name: "Revenue", value: totalRevenue },
+    { name: "Tickets Sold", value: totalTicketsSold },
+    { name: "Tickets Added", value: totalTicketsAdded },
+  ];
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-6">
@@ -93,34 +94,26 @@ const data = [
           Revenue Analytics
         </h2>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-accent-content">
-      
-      {/* Title */}
-      <h2 className="text-xl font-bold mb-6">
-        Performance Summary
-      </h2>
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-accent-content">
+          {/* Title */}
+          <h2 className="text-xl font-bold mb-6">Performance Summary</h2>
 
-      {/* Chart */}
-      <div className="w-full h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            
-            <CartesianGrid strokeDasharray="3 3" />
-            
-            <XAxis dataKey="name" />
-            <YAxis />
+          {/* Chart */}
+          <div className="w-full h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
 
-            <Tooltip />
+                <XAxis dataKey="name" />
+                <YAxis />
 
-            <Bar
-              dataKey="value"
-              fill="#00bcd4"
-              radius={[8, 8, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+                <Tooltip />
+
+                <Bar dataKey="value" fill="#00bcd4" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

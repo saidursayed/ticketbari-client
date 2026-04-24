@@ -5,6 +5,7 @@ import { LuCalendar } from "react-icons/lu";
 import { HiOutlineMail } from "react-icons/hi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const Profile = () => {
   // const user = {
@@ -40,7 +41,7 @@ const Profile = () => {
     hour12: true,
   });
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-6">

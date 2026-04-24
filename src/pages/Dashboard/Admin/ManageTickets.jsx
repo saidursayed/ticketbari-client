@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { LuTicket } from "react-icons/lu";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const ManageTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -34,7 +35,7 @@ const ManageTickets = () => {
     return new Date(departureDateTime) < new Date();
   };
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-6">

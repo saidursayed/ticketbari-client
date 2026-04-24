@@ -4,6 +4,8 @@ import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { RxCross1 } from "react-icons/rx";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const BookingModal = ({ ticket, closeModal, isOpen }) => {
   const { user } = useAuth();
@@ -19,7 +21,6 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
     from,
     to,
     departureDateTime,
-    
   } = ticket;
 
   const { mutateAsync, isPending } = useMutation({
@@ -81,80 +82,102 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
     };
 
     await mutateAsync(bookingData);
-    console.log(bookingData);
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      as="div"
-      className="relative z-10"
-      onClose={closeModal}
-    >
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4">
-          <DialogPanel className="w-full max-w-md bg-white p-6 shadow-xl rounded-2xl">
-            <DialogTitle className="text-lg font-semibold text-center">
-              Review & Book Ticket
+    <Dialog open={isOpen} onClose={closeModal} className="relative z-100">
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
+
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <DialogPanel className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <DialogTitle className="text-lg font-semibold">
+              Book Ticket
             </DialogTitle>
+            <button
+              onClick={closeModal}
+              className="text-secondary-content/80 hover:text-secondary-content cursor-pointer"
+            >
+              <RxCross1></RxCross1>
+            </button>
+          </div>
 
-            {/* Ticket Info */}
-            <div className="mt-3 space-y-2">
-              <p className="text-sm">🎫 {ticketTitle}</p>
-              <p className="text-sm">👤 {user?.displayName}</p>
-              <p className="text-sm">💰 ${ticketPrice} / ticket</p>
-              <p className="text-sm text-green-600">
-                Available: {ticketQuantity}
-              </p>
+          <p className="text-sm text-secondary-content mb-3">
+            Enter the number of tickets you want to book
+          </p>
+
+          {/* Ticket Info Card */}
+          <div className="border border-accent-content rounded-xl p-4 bg-base-200 mb-4">
+            <h3 className="font-medium text-primary-content">{ticketTitle}</h3>
+            <p className="text-sm text-secondary-content flex items-center  gap-2">
+              <span>{from}</span>
+              <FaArrowRightLong className="text-xs" />
+              <span>{to}</span>
+            </p>
+            <p className="text-sm text-secondary-content mt-1">
+              {new Date(departureDateTime).toLocaleString()}
+            </p>
+          </div>
+
+          {/* Quantity */}
+          <div className="mb-1">
+            <label className="text-sm font-medium">Number of Tickets</label>
+            <input
+              type="number"
+              min="1"
+              max={ticketQuantity}
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              className="w-full mt-1 px-3 py-2 border border-accent-content rounded-lg focus:ring-2 focus:ring-primary outline-none"
+            />
+          </div>
+
+          <p className="text-xs text-secondary-content mb-4">
+            Maximum available: {ticketQuantity}
+          </p>
+
+          {/* Price Summary */}
+          <div className="border border-accent-content text-primary-content rounded-xl p-4 mb-5">
+            <div className="flex justify-between font-semibold text-sm mb-1">
+              <span>Unit Price</span>
+              <span>৳{ticketPrice}</span>
+            </div>
+            <div className="flex justify-between font-semibold text-sm mb-3">
+              <span>Quantity</span>
+              <span>{quantity}</span>
             </div>
 
-            {/* 🔢 Quantity Input */}
-            <div className="mt-4">
-              <label className="text-sm font-medium">Select Quantity</label>
-              <input
-                type="number"
-                min="1"
-                max={ticketQuantity}
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none"
-              />
+            <hr className="text-primary" />
+
+            <div className="flex justify-between font-semibold mt-3">
+              <span>Total</span>
+              <span className="text-primary">
+                Total: ${ticketPrice * quantity}
+              </span>
             </div>
+          </div>
 
-            {/* 💰 Total */}
-            <div className="mt-3 text-sm font-semibold">
-              Total: ${ticketPrice * quantity}
-            </div>
+          {/* Buttons */}
+          <div className="flex gap-3">
+            <button
+              onClick={closeModal}
+              className="w-full py-2 rounded-lg bg-base-200 text-primary-content hover:bg-accent-content transition cursor-pointer font-semibold"
+            >
+              Cancel
+            </button>
 
-            {/* Buttons */}
-            <div className="flex mt-5 justify-between gap-3">
-              <button
-                onClick={handleBooking}
-                disabled={
-                  isPending || quantity <= 0 || quantity > ticketQuantity
-                }
-                className={`w-full py-2 rounded-lg text-white ${
-                  isPending || quantity <= 0 || quantity > ticketQuantity
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-600"
-                }`}
-              >
-                {isPending ? "Processing..." : "Confirm Booking"}
-              </button> 
-
-              {/* <button onClick={handleBooking} className="btn btn-lg">
-                Confirm Booking
-              </button> */}
-
-              <button
-                onClick={closeModal}
-                className="w-full py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
-              >
-                Cancel
-              </button>
-            </div>
-          </DialogPanel>
-        </div>
+            <button
+              onClick={handleBooking}
+              disabled={isPending}
+              className={`w-full py-2 rounded-lg text-white transition cursor-pointer ${
+                isPending ? "bg-primary/50" : "bg-primary/90 hover:bg-primary"
+              }`}
+            >
+              {isPending ? "Processing..." : "Confirm Booking"}
+            </button>
+          </div>
+        </DialogPanel>
       </div>
     </Dialog>
   );

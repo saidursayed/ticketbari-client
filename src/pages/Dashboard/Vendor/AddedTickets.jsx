@@ -1,4 +1,5 @@
 import AddedTicketCard from "../../../components/Dashboard/AddedTicketCard/AddedTicketCard";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +11,7 @@ const AddedTickets = () => {
   const {
     data: tickets = [],
     isLoading,
-    // refetch,
+    refetch,
   } = useQuery({
     queryKey: ["tickets", user?.email],
     queryFn: async () => {
@@ -20,7 +21,7 @@ const AddedTickets = () => {
     enabled: !!user?.email,
   });
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>
 
   return (
     <div className="p-6">
@@ -34,7 +35,7 @@ const AddedTickets = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tickets.map((ticket) => (
-          <AddedTicketCard key={ticket._id} ticket={ticket}></AddedTicketCard>
+          <AddedTicketCard key={ticket._id} ticket={ticket} refetch={refetch}></AddedTicketCard>
         ))}
       </div>
     </div>

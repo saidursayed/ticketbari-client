@@ -3,10 +3,12 @@ import { GoMegaphone } from "react-icons/go";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { LuTicket } from "react-icons/lu";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const AdvertiseTicketsAdmin = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: approvedTickets = [], refetch } = useQuery({
+
+  const { data: approvedTickets = [], refetch, isLoading } = useQuery({
     queryKey: ["approvedTicket"],
     queryFn: async () => {
       const result = await axiosSecure.get("/tickets/approved");
@@ -42,6 +44,7 @@ const AdvertiseTicketsAdmin = () => {
 
   const advertisedCount = approvedTickets.filter((t) => t.isAdvertised).length;
 
+  if(isLoading) return <LoadingSpinner></LoadingSpinner>
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -112,19 +115,19 @@ const AdvertiseTicketsAdmin = () => {
                 <div className="text-sm text-secondary-content space-y-1">
                   <p>
                     <span className="font-medium text-primary-content">
-                      Type:{" "}
+                      Type:
                     </span>
                     {ticket.transport}
                   </p>
                   <p>
                     <span className="font-medium text-primary-content">
-                      Route:{" "}
+                      Route:
                     </span>
                     {ticket.from} → {ticket.to}
                   </p>
                   <p>
                     <span className="font-medium text-primary-content">
-                      Price:{" "}
+                      Price:
                     </span>
                     <span className="text-primary font-semibold">
                       ${ticket.ticketPrice}

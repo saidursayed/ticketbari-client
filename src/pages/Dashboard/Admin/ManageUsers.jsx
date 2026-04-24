@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import { LuShieldAlert, LuTicket, LuUsers } from "react-icons/lu";
 import { FiShield, FiUser, FiUserCheck } from "react-icons/fi";
 import { IoWarningOutline } from "react-icons/io5";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -64,7 +65,7 @@ const ManageUsers = () => {
   };
 
   if (isAllUsersLoading || isUsersLoading)
-    return <p className="text-center mt-10">Loading users...</p>;
+    return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-6">
