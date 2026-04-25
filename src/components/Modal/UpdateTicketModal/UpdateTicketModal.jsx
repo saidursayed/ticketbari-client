@@ -8,7 +8,7 @@ import { imageUpload } from "../../../utils";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const UpdateTicketModal = ({ ticket, isOpen, closeModal }) => {
+const UpdateTicketModal = ({ ticket, isOpen, closeModal, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [preview, setPreview] = useState(ticket?.ticketImage);
 
@@ -40,6 +40,7 @@ const UpdateTicketModal = ({ ticket, isOpen, closeModal }) => {
       toast.success("Ticket updated Successfully");
       closeModal();
       reset();
+      refetch();
     },
 
     onError: () => {
@@ -332,8 +333,6 @@ const UpdateTicketModal = ({ ticket, isOpen, closeModal }) => {
                   >
                     {isPending ? "Updating..." : "Update Ticket"}
                   </button>
-
-                  
                 </div>
               </div>
             </fieldset>

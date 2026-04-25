@@ -223,6 +223,7 @@ const AddTicketForm = () => {
                 </label>
                 <input
                   type="datetime-local"
+                  min={new Date().toISOString().slice(0, 16)}
                   {...register("departureDateTime", { required: true })}
                   className="input-style"
                 />

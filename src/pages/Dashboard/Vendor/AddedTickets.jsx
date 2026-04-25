@@ -21,13 +21,15 @@ const AddedTickets = () => {
     enabled: !!user?.email,
   });
 
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-primary-content">My Added Tickets</h1>
+        <h1 className="text-2xl font-bold text-primary-content">
+          My Added Tickets
+        </h1>
         <p className="text-primary-content/70 mt-1">
           Manage your ticket listings
         </p>
@@ -35,7 +37,11 @@ const AddedTickets = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tickets.map((ticket) => (
-          <AddedTicketCard key={ticket._id} ticket={ticket} refetch={refetch}></AddedTicketCard>
+          <AddedTicketCard
+            key={ticket._id}
+            ticket={ticket}
+            refetch={refetch}
+          ></AddedTicketCard>
         ))}
       </div>
     </div>

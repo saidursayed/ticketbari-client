@@ -214,6 +214,7 @@ const AddedTicketCard = ({ ticket, refetch }) => {
               ticket={ticket}
               closeModal={() => setIsOpen(false)}
               isOpen={isOpen}
+              refetch={refetch}
             ></UpdateTicketModal>
 
             <button
