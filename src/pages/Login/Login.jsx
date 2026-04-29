@@ -59,8 +59,8 @@ const Login = () => {
   return (
     <div>
       <Container>
-        <div className="min-h-screen flex items-center justify-center bg-base-100 py-4 sm:py-6 lg:py-8">
-          <div className="w-full max-w-md bg-secondary rounded-2xl shadow-xl p-8 border border-accent-content">
+        <div className="min-h-screen flex items-center justify-center bg-base-100 pb-10 md:pb-16 md:pt-30 pt-26 ">
+          <div className="w-full max-w-md bg-secondary rounded-2xl shadow-xl p-4 md:p-8 border border-accent-content">
             {/* Header */}
             <div className="text-center mb-6">
               <h1 className="text-3xl font-bold text-primary-content">
@@ -168,7 +168,6 @@ const Login = () => {
               </button>
             </div>
 
-          
             <p className="text-center text-secondary-content mt-6 text-sm">
               Don't have an account ? &nbsp;
               <Link to="/register" className="text-primary hover:underline">
