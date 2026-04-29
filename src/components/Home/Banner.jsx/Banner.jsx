@@ -6,7 +6,7 @@ import { LuBus } from "react-icons/lu";
 
 const Banner = () => {
   return (
-    <div className="bg-linear-to-br from-primary/5 via-background to-accent/5 py-20">
+    <div className="bg-linear-to-br from-primary/5 via-background to-accent/5 pb-20 pt-40">
       <Container>
         <div className=" text-center">
           <div className="text-4xl md:text-5xl lg:text-6xl font-bold">
@@ -23,7 +23,7 @@ const Banner = () => {
 
           {/* Search Box */}
           {/* <div className="mt-10 flex justify-center">
-            <div className="bg-white p-6 rounded-xl shadow-md flex flex-col md:flex-row gap-4 items-center">
+            <div className="bg-secondary p-6 rounded-xl shadow-md flex flex-col md:flex-row gap-4 items-center">
               <input
                 type="text"
                 placeholder="Departure city"
@@ -44,16 +44,15 @@ const Banner = () => {
                 <option>Plane</option>
               </select>
 
-              <button className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+              <button className="flex items-center gap-2 bg-blue-600 text-secondary px-6 py-2 rounded-lg hover:bg-blue-700 transition">
                 <FiSearch />
                 Search
               </button>
             </div>
           </div> */}
-          
 
           {/* Transport Icons */}
-          <div className="mt-10 flex justify-center gap-8 text-gray-600">
+          <div className="mt-10 flex flex-wrap justify-center gap-8 text-secondary-content">
             <div className="flex justify-center items-center">
               <div className="bg-primary/10 p-3 rounded-full">
                 <LuBus size={20} className="text-primary" />
@@ -69,9 +68,7 @@ const Banner = () => {
             </div>
 
             <div className="flex gap-1 items-center">
-              <div
-                className="bg-[#ec5a00]/10 p-3 rounded-full"
-              >
+              <div className="bg-[#ec5a00]/10 p-3 rounded-full">
                 <IoBoatOutline size={20} className="text-[#ec5a00]" />
               </div>
               <span className="mt-2 font-medium">Launch</span>
@@ -79,12 +76,11 @@ const Banner = () => {
 
             <div className="flex gap-1 items-center">
               <div className="bg-[#9260da]/10 p-3 rounded-full">
-                <LuPlane size={20}  className="text-[#9260da]" />
+                <LuPlane size={20} className="text-[#9260da]" />
               </div>
               <span className="mt-2 font-medium">Plane</span>
             </div>
           </div>
-
         </div>
       </Container>
     </div>

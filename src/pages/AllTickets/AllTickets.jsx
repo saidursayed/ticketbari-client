@@ -37,7 +37,7 @@ const AllTickets = () => {
     ],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/all-tickets?from=${filters.from}&to=${filters.to}&type=${filters.type}&sort=${filters.sort}&page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_API_URL}/all-tickets?from=${filters.from}&to=${filters.to}&type=${filters.type}&sort=${filters.sort}&page=${page}&limit=${limit}`,
       );
       return res.data;
     },
@@ -56,7 +56,7 @@ const AllTickets = () => {
   };
 
   return (
-    <div className="py-10">
+    <div className=" pb-20 pt-30">
       <Container>
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-primary-content">
@@ -67,7 +67,7 @@ const AllTickets = () => {
           </p>
         </div>
 
-        <div className="w-full bg-white rounded-2xl shadow-md p-6 border border-accent-content my-10">
+        <div className="w-full bg-secondary rounded-2xl shadow-md p-6 border border-accent-content my-10">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
             {/* LEFT: From + To */}
             <div className="w-full lg:flex-1 flex flex-col sm:flex-row gap-3">
@@ -104,7 +104,7 @@ const AllTickets = () => {
                 <select
                   value={temp.type}
                   onChange={(e) => setTemp({ ...temp, type: e.target.value })}
-                  className="outline-none bg-transparent text-sm w-full font-medium text-primary-content"
+                  className="outline-none bg-secondary text-sm w-full font-medium text-primary-content"
                 >
                   <option value="">All Transport</option>
                   <option value="Bus">Bus</option>
@@ -120,7 +120,7 @@ const AllTickets = () => {
                 <select
                   value={temp.sort}
                   onChange={(e) => setTemp({ ...temp, sort: e.target.value })}
-                  className="outline-none bg-transparent text-sm w-full font-medium text-primary-content"
+                  className="outline-none  text-sm w-full font-medium text-primary-content bg-secondary"
                 >
                   <option value="">Default</option>
                   <option value="asc">Low → High</option>
@@ -131,7 +131,7 @@ const AllTickets = () => {
               {/* Button */}
               <button
                 onClick={handleSearch}
-                className="btn bg-primary/90 text-white rounded-lg hover:bg-primary w-full sm:w-auto px-6 py-2 flex items-center justify-center gap-2"
+                className="btn bg-primary/90 text-secondary rounded-lg hover:bg-primary w-full sm:w-auto px-6 py-2 flex items-center justify-center gap-2"
               >
                 <FaSearch />
                 <span>Search</span>
@@ -146,51 +146,51 @@ const AllTickets = () => {
                 <span className="text-sm font-semibold">Active filters:</span>
 
                 {filters.from && (
-                  <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-primary-content">
                     From: {filters.from}
                     <button
                       onClick={() => removeFilter("from")}
-                      className="text-red-500 font-bold"
+                      className="text-red-500 font-bold cursor-pointer hover:text-red-600 transition"
                     >
-                      <RxCross2 className="cursor-pointer text-red-500" />
+                      <RxCross2 />
                     </button>
                   </span>
                 )}
 
                 {filters.to && (
-                  <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-primary-content">
                     To: {filters.to}
                     <button
                       onClick={() => removeFilter("to")}
-                      className="text-red-500 font-bold"
+                      className="text-red-500 font-bold cursor-pointer hover:text-red-600 transition"
                     >
-                      <RxCross2 className="cursor-pointer text-red-500" />
+                      <RxCross2 />
                     </button>
                   </span>
                 )}
 
                 {filters.type && (
-                  <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="flex items-center gap-2 px-3 py-1 bg-base-200 text-primary-content rounded-full text-sm">
                     {filters.type}
                     <button
                       onClick={() => removeFilter("type")}
-                      className="text-red-500 font-bold"
+                      className="text-red-500 font-bold cursor-pointer hover:text-red-600 transition"
                     >
-                      <RxCross2 className="cursor-pointer text-red-500" />
+                      <RxCross2 />
                     </button>
                   </span>
                 )}
 
                 {filters.sort && (
-                  <span className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="flex items-center gap-2 px-3 py-1 bg-base-200 text-primary-content rounded-full text-sm">
                     {filters.sort === "asc"
                       ? "Price: Low to High"
                       : "Price: High to Low"}
                     <button
                       onClick={() => removeFilter("sort")}
-                      className="text-red-500 font-bold"
+                      className="text-red-500 font-bold cursor-pointer hover:text-red-600 transition"
                     >
-                      <RxCross2 className="cursor-pointer text-red-500" />
+                      <RxCross2 />
                     </button>
                   </span>
                 )}
@@ -202,7 +202,7 @@ const AllTickets = () => {
                     setTemp({ from: "", to: "", type: "", sort: "" });
                     setPage(1);
                   }}
-                  className="ml-2 px-3 py-1 text-sm font-medium text-red-500 border border-red-200 rounded-md hover:bg-red-50 hover:text-red-600 transition-all duration-200 cursor-pointer"
+                  className="ml-2 px-3 py-1 text-sm font-medium text-red-500 border border-accent-content rounded-md hover:bg-red-100 hover:text-red-600 transition-all duration-200 cursor-pointer"
                 >
                   Clear all
                 </button>
@@ -223,13 +223,13 @@ const AllTickets = () => {
           </div>
         </div>
 
-        {/* 📄 PAGINATION */}
+        {/*  PAGINATION */}
         {data?.tickets?.length != 0 && (
           <div className="flex gap-2 mt-6 justify-center">
             <button
               onClick={() => setPage((p) => p - 1)}
               disabled={page === 1}
-              className={`border-[1.5px] px-4 py-1.5 rounded-md font-semibold transition-all duration-200 cursor-pointer ${page === 1 ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200" : "bg-white text-primary hover:bg-primary hover:text-white border-primary"}`}
+              className={`border-[1.5px] px-4 py-1.5 rounded-md font-semibold transition-all duration-200  ${page === 1 ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200" : "bg-secondary text-primary hover:bg-primary hover:text-secondary border-primary cursor-pointer"}`}
             >
               Prev
             </button>
@@ -238,8 +238,10 @@ const AllTickets = () => {
               <button
                 key={n}
                 onClick={() => setPage(n + 1)}
-                className={`px-3 py-1 border-[1.5px] border-accent-content hover:border-primary rounded-md hover:bg-primary  hover:text-white cursor-pointer transition font-medium ${
-                  page === n + 1 ? "bg-primary text-white border-primary" : ""
+                className={`px-3 py-1 border-[1.5px] border-accent-content hover:border-primary rounded-md hover:bg-primary  hover:text-secondary cursor-pointer transition font-medium ${
+                  page === n + 1
+                    ? "bg-primary text-secondary border-primary"
+                    : ""
                 }`}
               >
                 {n + 1}
@@ -249,7 +251,7 @@ const AllTickets = () => {
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={page === data?.totalPages}
-              className={`border-[1.5px] px-4 py-1.5 rounded-md font-semibold transition-all duration-200 cursor-pointer ${page === data?.totalPages ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200" : "bg-white text-primary hover:bg-primary hover:text-white border-primary"}`}
+              className={`border-[1.5px] px-4 py-1.5 rounded-md font-semibold transition-all duration-200  ${page === data?.totalPages ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200" : "bg-secondary text-primary hover:bg-primary hover:text-secondary border-primary cursor-pointer"}`}
             >
               Next
             </button>

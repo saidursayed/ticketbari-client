@@ -2,32 +2,41 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: light --default;
+  themes: light dark --default;
 }
 
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  /* --color-primary: #ffa633;  */
-  /* --color-primary: #CEB45F;  */
-  
-  /* --color-secondary: #002c3f; */
 
-  /* --color-base-content: #2E2ddd; */
-  /* --color-neutral-content: #dadada; */
-
-  --color-base-100: #FBFCFD;
+  --color-base-100: #fbfcfd;
   --color-base-200: #edf3f8;
-  --color-base-300: #F9FBFC;
-  --color-info-content: #F6F9FB;
-  
+  --color-base-300: #f9fbfc;
+  --color-info-content: #f6f9fb;
+
   --color-primary: #0073d5;
   --color-primary-content: #030712;
+  --color-secondary: #ffffff;
   --color-secondary-content: #5d646f;
   --color-accent: #00bb87;
-  --color-accent-content: #d9dfe5;
-  
+  --color-accent-content: #d9dfe4;
+}
 
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+
+  --color-base-100: #04070f;
+  --color-base-200: #151b24;
+  --color-base-300: #0d131c;
+  --color-info-content: #090d15;
+
+  --color-primary: #0073d5;
+  --color-primary-content: #f2f5f8;
+  --color-secondary: #0a1018;
+  --color-secondary-content: #86919b;
+  --color-accent: #00bb87;
+  --color-accent-content: #232933;
 }
 
 * {
@@ -35,6 +44,10 @@
 }
 
 .input-style {
-  @apply w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl 
-  focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition;
+  @apply w-full px-4 py-3 mt-1 
+  border border-accent-content 
+  bg-base-100 text-primary-content
+  rounded-lg outline-none transition-all duration-200;
+
+  @apply focus:ring-2 focus:ring-primary focus:border-primary;
 }

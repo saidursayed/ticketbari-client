@@ -87,7 +87,7 @@ const UpdateTicketModal = ({ ticket, isOpen, closeModal, refetch }) => {
 
       {/* Center */}
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6 max-h-[90vh] overflow-y-auto">
+        <DialogPanel className="w-full max-w-2xl bg-secondary rounded-2xl shadow-xl p-6 max-h-[90vh] overflow-y-auto">
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
@@ -101,7 +101,7 @@ const UpdateTicketModal = ({ ticket, isOpen, closeModal, refetch }) => {
 
             <button
               onClick={closeModal}
-              className="text-gray-500 hover:text-black"
+              className="text-secondary-content hover:text-primary-content cursor-pointer"
             >
               <RxCross1 />
             </button>
@@ -325,7 +325,7 @@ const UpdateTicketModal = ({ ticket, isOpen, closeModal, refetch }) => {
                   <button
                     type="submit "
                     disabled={isPending}
-                    className={`btn rounded-lg text-white transition ${
+                    className={`btn rounded-lg text-secondary transition ${
                       isPending
                         ? "bg-primary/50"
                         : "bg-primary/90 hover:bg-primary"

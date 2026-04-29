@@ -33,20 +33,20 @@ const BookedTickets = () => {
       </div>
 
       {bookings.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-md p-6 border border-accent-content">
+        <div className="bg-secondary rounded-2xl shadow-md p-6 border border-accent-content">
           <div className="flex items-center justify-center py-16 ">
             <div className="text-center">
               <div className="flex justify-center mb-4">
-                <div className="bg-gray-200 p-5 rounded-full">
-                  <LuTicketCheck className="w-8 h-8 text-gray-500" />
+                <div className="bg-base-200 p-5 rounded-full">
+                  <LuTicketCheck className="w-8 h-8 text-secondary-content" />
                 </div>
               </div>
 
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-primary-content">
                 No bookings yet
               </h2>
 
-              <p className="text-gray-500 mt-2">
+              <p className="text-secondary-content mt-2">
                 Start browsing tickets and make your first booking
               </p>
             </div>

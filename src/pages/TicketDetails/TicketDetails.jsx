@@ -62,7 +62,7 @@ const TicketDetails = () => {
   } = ticket;
 
   return (
-    <div className="bg-base-100 py-16">
+    <div className="bg-base-100 pb-10 md:pb-20 pt-24 md:pt-30">
       <Container>
         <div>
           {/* Back Button */}
@@ -72,14 +72,14 @@ const TicketDetails = () => {
           >
             <span className="mr-1">
               <FaArrowLeft></FaArrowLeft>
-            </span>{" "}
+            </span>
             Back to Tickets
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column: Image and Details */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Hero Image Section */}
+              {/*  Image */}
               <div className="relative rounded-2xl overflow-hidden shadow-lg h-110 group">
                 <img
                   src={ticketImage}
@@ -88,28 +88,28 @@ const TicketDetails = () => {
                 />
                 <div className="absolute top-4 left-4">
                   {transport === "Bus" && (
-                    <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                    <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-md text-secondary shadow">
                       <LuBus size={16} />
                       <span className="text-sm font-medium">Bus</span>
                     </div>
                   )}
 
                   {transport === "Train" && (
-                    <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                    <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-md text-secondary shadow">
                       <PiTrain size={16} />
                       <span className="text-sm font-medium">Train</span>
                     </div>
                   )}
 
                   {transport === "Launch" && (
-                    <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                    <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-md text-secondary shadow">
                       <IoBoatOutline size={16} />
                       <span className="text-sm font-medium">Launch</span>
                     </div>
                   )}
 
                   {transport === "Plane" && (
-                    <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-md text-white shadow">
+                    <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-md text-secondary shadow">
                       <LuPlane size={16} />
                       <span className="text-sm font-medium">Plane</span>
                     </div>
@@ -118,18 +118,18 @@ const TicketDetails = () => {
               </div>
 
               {/* Main Info Card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h1 className="text-2xl font-semibold text-primary-content mb-8">
+              <div className="bg-secondary rounded-2xl p-4 md:p-8 shadow-sm border border-accent-content">
+                <h1 className="text-xl md:text-2xl font-semibold text-primary-content mb-4 md:mb-8">
                   {ticketTitle}
                 </h1>
 
                 {/* Route Section */}
-                <div className="flex items-center justify-between bg-base-200 p-6 rounded-xl mb-6 relative">
+                <div className="flex items-center justify-between bg-base-200 p-4 md:p-6 rounded-xl mb-6 relative">
                   <div>
                     <p className="text-xs text-secondary-content font-semibold uppercase mb-1">
                       From
                     </p>
-                    <h2 className="text-xl font-semibold text-primary-content">
+                    <h2 className="md:text-xl font-semibold text-primary-content">
                       {from}
                     </h2>
                   </div>
@@ -142,14 +142,14 @@ const TicketDetails = () => {
                     <p className="text-xs text-secondary-content font-semibold uppercase mb-1">
                       To
                     </p>
-                    <h2 className="text-xl font-semibold text-primary-content">
+                    <h2 className="md:text-xl font-semibold text-primary-content">
                       {to}
                     </h2>
                   </div>
                 </div>
 
                 {/* Date and Time Section */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid md:grid-cols-2 gap-4 mb-8">
                   <div className="bg-base-200 p-4 rounded-xl flex items-center gap-3">
                     <div className="text-primary">
                       <Calendar size={24} />
@@ -183,7 +183,7 @@ const TicketDetails = () => {
                   <p className="font-bold text-primary-content mb-3">
                     Included Perks:
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 flex-wrap">
                     {perks.map((perk) => (
                       <div
                         key={perk}
@@ -196,14 +196,14 @@ const TicketDetails = () => {
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+              <div className="bg-secondary p-4 md:p-6 rounded-2xl shadow-sm border border-accent-content hover:shadow-md transition duration-300">
                 {/* Title */}
                 <h2 className="text-lg font-semibold text-primary-content mb-5">
                   Vendor Information
                 </h2>
 
                 {/* Content */}
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   {/* Vendor Name */}
                   <div className="flex-1 bg-base-200 p-3 rounded flex items-center gap-1.5">
                     <div className="bg-primary/10 text-primary p-2 rounded-lg">
@@ -239,8 +239,8 @@ const TicketDetails = () => {
 
             {/* Right Column: Widgets */}
             <div className="space-y-6">
-              {/* Countdown Widget */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              {/* Countdown  */}
+              <div className="bg-secondary p-4 md:p-6 rounded-2xl shadow-sm border border-accent-content">
                 <div className="flex items-center gap-2 mb-4">
                   <Clock size={18} className="text-primary" />
                   <h3 className="font-bold text-primary-content">
@@ -289,7 +289,7 @@ const TicketDetails = () => {
               </div>
 
               {/* Booking Widget */}
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              <div className="bg-secondary p-4 md:p-6 rounded-2xl shadow-sm border border-accent-content">
                 <h3 className="font-bold text-primary-content mb-6 text-lg">
                   Book This Ticket
                 </h3>
@@ -298,12 +298,12 @@ const TicketDetails = () => {
                   <span className="text-sm text-primary-content/60 font-semibold">
                     Price per ticket
                   </span>
-                  <span className="text-2xl font-bold text-primary">
+                  <span className="text-xl md:text-2xl font-bold text-primary">
                     {ticketPrice}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center bg-base-200 px-4 py-3 rounded-lg mb-6 border border-gray-100">
+                <div className="flex justify-between items-center bg-base-200 px-4 py-3 rounded-lg mb-6 border border-accent-content">
                   <div className="flex items-center gap-2 text-primary-content/80">
                     <LuUsers size={16} />
                     <span className="text-xs font-semibold uppercase">
@@ -318,7 +318,7 @@ const TicketDetails = () => {
                 <button
                   onClick={() => setIsOpen(true)}
                   disabled={ticketQuantity === 0 || isExpired}
-                  className={`w-full text-white py-2.5 rounded-lg font-bold transition-all shadow-md cursor-pointer ${ticketQuantity === 0 || isExpired ? "bg-secondary-content/50 cursor-not-allowed" : "bg-primary hover:bg-primary/90 "}`}
+                  className={`w-full text-secondary py-2.5 rounded-lg font-bold transition-all shadow-md cursor-pointer ${ticketQuantity === 0 || isExpired ? "bg-secondary-content/50 cursor-not-allowed" : "bg-primary hover:bg-primary/90 "}`}
                 >
                   {ticketQuantity === 0 || isExpired
                     ? "Departed Cannot Book"

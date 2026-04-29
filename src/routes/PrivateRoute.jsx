@@ -1,18 +1,11 @@
+import LoadingSpinner from "../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
-import { Navigate, useLocation } from "react-router";
-// import LoadingSpinner from "../components/Shared/LoadingSpinner";
+import { Navigate } from "react-router";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const location = useLocation();
-  // console.log(location);
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner text-[#CEB45F]"></span>
-      </div>
-    );
-  if (!user) return <Navigate to="/login" state={location.pathname} replace />;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
+  if (!user) return <Navigate to="/login" replace />;
   return children;
 };
 

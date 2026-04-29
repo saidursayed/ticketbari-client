@@ -8,7 +8,11 @@ import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpi
 const AdvertiseTicketsAdmin = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: approvedTickets = [], refetch, isLoading } = useQuery({
+  const {
+    data: approvedTickets = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["approvedTicket"],
     queryFn: async () => {
       const result = await axiosSecure.get("/tickets/approved");
@@ -44,7 +48,7 @@ const AdvertiseTicketsAdmin = () => {
 
   const advertisedCount = approvedTickets.filter((t) => t.isAdvertised).length;
 
-  if(isLoading) return <LoadingSpinner></LoadingSpinner>
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -56,7 +60,7 @@ const AdvertiseTicketsAdmin = () => {
         </p>
       </div>
 
-      <div className="flex items-center gap-4 px-6 py-10 bg-white rounded-2xl shadow-sm border border-accent-content mb-6">
+      <div className="flex items-center gap-4 px-6 py-10 bg-secondary rounded-2xl shadow-sm border border-accent-content mb-6">
         <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[#00bb87]/10 text-[#00bb87] text-xl font-bold">
           <GoMegaphone />
         </div>
@@ -69,7 +73,7 @@ const AdvertiseTicketsAdmin = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6 border border-accent-content">
+      <div className="bg-secondary rounded-2xl shadow-md p-6 border border-accent-content">
         <div className="flex items-center gap-2 mb-6">
           <GoMegaphone className="text-lg" />
           <h2 className="text-xl font-semibold">
@@ -82,7 +86,7 @@ const AdvertiseTicketsAdmin = () => {
             {approvedTickets.map((ticket) => (
               <div
                 key={ticket._id}
-                className="bg-white rounded-2xl shadow-sm border border-accent-content p-4 flex flex-col gap-2"
+                className="bg-secondary rounded-2xl shadow-sm border border-accent-content p-4 flex flex-col gap-2"
               >
                 {/* Header */}
                 <div className="flex justify-between items-start">
@@ -115,19 +119,19 @@ const AdvertiseTicketsAdmin = () => {
                 <div className="text-sm text-secondary-content space-y-1">
                   <p>
                     <span className="font-medium text-primary-content">
-                      Type:
+                      Type: &nbsp;
                     </span>
-                    {ticket.transport}
+                     {ticket.transport}
                   </p>
                   <p>
                     <span className="font-medium text-primary-content">
-                      Route:
+                      Route: &nbsp;
                     </span>
                     {ticket.from} → {ticket.to}
                   </p>
                   <p>
                     <span className="font-medium text-primary-content">
-                      Price:
+                      Price: &nbsp;
                     </span>
                     <span className="text-primary font-semibold">
                       ${ticket.ticketPrice}
@@ -155,7 +159,6 @@ const AdvertiseTicketsAdmin = () => {
                   </div>
                 </div>
 
-                {/* Warning */}
               </div>
             ))}
           </div>
@@ -163,7 +166,6 @@ const AdvertiseTicketsAdmin = () => {
 
         <div className="overflow-x-auto hidden lg:block">
           <table className="w-full table">
-            {/* Head */}
             <thead>
               <tr className="text-left text-gray-500 border-b">
                 <th className="py-3">Ticket</th>
@@ -175,7 +177,6 @@ const AdvertiseTicketsAdmin = () => {
               </tr>
             </thead>
 
-            {/* Body */}
             <tbody>
               {approvedTickets.map((ticket) => (
                 <tr key={ticket._id}>

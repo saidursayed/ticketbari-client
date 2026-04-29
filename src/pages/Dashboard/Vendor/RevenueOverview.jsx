@@ -12,7 +12,11 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  LineChart,
+  Line,
+  Legend,
 } from "recharts";
+
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const RevenueOverview = () => {
@@ -56,7 +60,7 @@ const RevenueOverview = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Total Revenue */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
+        <div className="bg-secondary rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
           <div className="bg-primary/10 text-primary p-4 rounded-full text-2xl">
             <FaDollarSign />
           </div>
@@ -67,8 +71,8 @@ const RevenueOverview = () => {
         </div>
 
         {/* Tickets Sold */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
-          <div className="bg-[#00bb87]/10 text-[#00bb87] p-4 rounded-full text-2xl">
+        <div className="bg-secondary rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
+          <div className="bg-accent/10 text-accent p-4 rounded-full text-2xl">
             <LuBox />
           </div>
           <div>
@@ -78,8 +82,8 @@ const RevenueOverview = () => {
         </div>
 
         {/* Tickets Added */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
-          <div className="bg-[#00bb87]/10 text-[#00bb87] p-4 rounded-full text-2xl">
+        <div className="bg-secondary rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-accent-content">
+          <div className="bg-accent/10 text-accent p-4 rounded-full text-2xl">
             <LuTicket />
           </div>
           <div>
@@ -89,14 +93,11 @@ const RevenueOverview = () => {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-accent-content">
-        <h2 className="text-xl font-bold mb-4 text-primary-content">
-          Revenue Analytics
-        </h2>
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-accent-content">
-          {/* Title */}
-          <h2 className="text-xl font-bold mb-6">Performance Summary</h2>
+      <div className="flex flex-col md:flex-row md:gap-6">
+        <div className="md:w-3/5 bg-secondary p-6 rounded-2xl shadow-sm border border-accent-content mt-8">
+          <h2 className="text-xl font-bold mb-4 text-primary-content">
+            Revenue Analytics
+          </h2>
 
           {/* Chart */}
           <div className="w-full h-80">
@@ -109,7 +110,48 @@ const RevenueOverview = () => {
 
                 <Tooltip />
 
-                <Bar dataKey="value" fill="#00bcd4" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="value" fill="#0073d5" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="md:w-2/5 flex-1 bg-secondary p-6 rounded-2xl shadow-sm border border-accent-content mt-8">
+          <h2 className="text-xl font-bold mb-4 text-primary-content">
+            Ticket Analytics
+          </h2>
+
+          <div className="w-full h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={[
+                  {
+                    name: "Tickets",
+                    sold: totalTicketsSold,
+                    added: totalTicketsAdded,
+                  },
+                ]}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="name" />
+                <YAxis />
+
+                <Tooltip />
+                <Legend verticalAlign="bottom" height={36} />
+                <Bar
+                  dataKey="sold"
+                  fill="#0073d5"
+                  radius={[8, 8, 0, 0]}
+                  name="Tickets Sold"
+                />
+
+                <Bar
+                  dataKey="added"
+                  fill="#8b5cf6"
+                  radius={[8, 8, 0, 0]}
+                  name="Tickets Added"
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

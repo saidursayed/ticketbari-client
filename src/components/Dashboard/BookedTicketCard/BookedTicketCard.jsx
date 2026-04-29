@@ -58,11 +58,10 @@ const BookedTicketCard = ({ bookingTicket }) => {
       "/payment-checkout-session",
       paymentInfo,
     );
-    // window.location.href = res.data.url;
     window.location.assign(res.data.url);
   };
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group overflow-hidden border border-accent-content flex flex-col h-full">
+    <div className="bg-secondary rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group overflow-hidden border border-accent-content flex flex-col h-full">
       {/* Image */}
       <div className="relative overflow-hidden">
         <img
@@ -74,28 +73,28 @@ const BookedTicketCard = ({ bookingTicket }) => {
         {/* Transport Badge */}
         <div className="absolute top-3 left-3 z-10">
           {transport === "Bus" && (
-            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuBus size={16} />
               <span className="text-sm font-medium">Bus</span>
             </div>
           )}
 
           {transport === "Train" && (
-            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <PiTrain size={16} />
               <span className="text-sm font-medium">Train</span>
             </div>
           )}
 
           {transport === "Launch" && (
-            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <IoBoatOutline size={16} />
               <span className="text-sm font-medium">Launch</span>
             </div>
           )}
 
           {transport === "Plane" && (
-            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuPlane size={16} />
               <span className="text-sm font-medium">Plane</span>
             </div>
@@ -103,7 +102,7 @@ const BookedTicketCard = ({ bookingTicket }) => {
         </div>
       </div>
 
-      {/* Content */}
+      {/* Ticket Content */}
       <div className="flex flex-col grow">
         <div className="p-4 space-y-3">
           <h2 className="text-lg font-bold text-primary-content">
@@ -116,12 +115,14 @@ const BookedTicketCard = ({ bookingTicket }) => {
               <p className="text-xs font-semibold text-secondary-content uppercase">
                 From
               </p>
-              <h2 className="text-base font-bold text-primary-content">{from}</h2>
+              <h2 className="text-base font-bold text-primary-content">
+                {from}
+              </h2>
             </div>
 
             <div className="flex flex-col items-center gap-1">
               <div className="relative flex items-center justify-center">
-                <div className="relative z-10 bg-white border border-accent-content rounded-full p-2 shadow-sm">
+                <div className="relative z-10 bg-secondary border border-accent-content rounded-full p-2 shadow-sm">
                   <ArrowRight className="text-primary" size={18} />
                 </div>
               </div>
@@ -160,51 +161,58 @@ const BookedTicketCard = ({ bookingTicket }) => {
               <p className="text-sm text-secondary-content font-medium">
                 Total Price
               </p>
-              <p className="text-primary font-bold text-lg">৳{totalPrice}</p>
+              <p className="text-primary font-bold text-lg">${totalPrice}</p>
             </div>
           </div>
 
           <div>
-            <Countdown
-              date={new Date(departureDateTime)}
-              onComplete={() => setIsExpired(true)}
-              renderer={({ days, hours, minutes, seconds, completed }) => {
-                if (completed) {
+            {status === "rejected" ? (
+              <div className="rounded-lg bg-red-500/10 border border-red-600/20  p-2">
+                <p className="text-sm text-center text-secondary-content">
+                  Your booking request was not approved by the vendor.
+                </p>
+              </div>
+            ) : (
+              <Countdown
+                date={new Date(departureDateTime)}
+                onComplete={() => setIsExpired(true)}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  if (completed) {
+                    return (
+                      <span className="text-red-500 font-bold bg-base-200 p-4 block rounded-lg">
+                        Departed
+                      </span>
+                    );
+                  }
+
+                  const timeData = [
+                    { val: days, label: "Days" },
+                    { val: hours, label: "Hours" },
+                    { val: minutes, label: "Mins" },
+                    { val: seconds, label: "Secs" },
+                  ];
+
                   return (
-                    <span className="text-red-500 font-bold bg-base-200 p-4 block rounded-lg">
-                      Departed
-                    </span>
+                    <div className="grid grid-cols-4 gap-2 text-center">
+                      {timeData.map((t) => (
+                        <div
+                          key={t.label}
+                          className="bg-primary/10 py-2 rounded-lg"
+                        >
+                          <p className="font-bold text-primary">{t.val}</p>
+                          <p className="text-xs font-semibold text-secondary-content uppercase">
+                            {t.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   );
-                }
-
-                const timeData = [
-                  { val: days, label: "Days" },
-                  { val: hours, label: "Hours" },
-                  { val: minutes, label: "Mins" },
-                  { val: seconds, label: "Secs" },
-                ];
-
-                return (
-                  <div className="grid grid-cols-4 gap-2 text-center">
-                    {timeData.map((t) => (
-                      <div
-                        key={t.label}
-                        className="bg-primary/10 py-2 rounded-lg"
-                      >
-                        <p className="font-bold text-primary">{t.val}</p>
-                        <p className="text-xs font-semibold text-secondary-content uppercase">
-                          {t.label}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                );
-              }}
-            />
+                }}
+              />
+            )}
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="bg-base-300 h-full">
           <div className="p-4 flex justify-center items-center border-t border-primary/30 ">
             {status === "paid" ? (
@@ -212,7 +220,7 @@ const BookedTicketCard = ({ bookingTicket }) => {
             ) : status === "accepted" && !isExpired ? (
               <button
                 onClick={() => handlePayment(bookingTicket)}
-                className="w-full py-2 rounded-lg text-white bg-primary/80 hover:bg-primary transition cursor-pointer"
+                className="w-full py-2 rounded-lg text-secondary bg-primary/80 hover:bg-primary transition cursor-pointer"
               >
                 Pay Now
               </button>
@@ -221,7 +229,9 @@ const BookedTicketCard = ({ bookingTicket }) => {
                 Waiting for vendor approval
               </p>
             ) : status === "rejected" ? (
-              <p className="text-red-500 text-sm font font-semibold mt-2">Booking rejected</p>
+              <p className="text-red-500 text-sm font font-semibold mt-2">
+                Booking rejected
+              </p>
             ) : isExpired ? (
               <p className="text-red-500 text-sm font-semibold mt-2">
                 Payment unavailable (Expired)

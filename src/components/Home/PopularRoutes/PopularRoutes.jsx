@@ -2,30 +2,32 @@ import { MapPin } from "lucide-react";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { GoMegaphone } from "react-icons/go";
 import Container from "../../Shared/Container/Container";
+import { TiArrowRight } from "react-icons/ti";
+
 const routes = [
   {
-    from: "Dhaka",
+    from: "Sylhet",
     to: "Chittagong",
     trips: "1,250",
-    image: "https://i.ibb.co/8bJ9YkF/chittagong.jpg",
+    image: "https://i.ibb.co.com/DPTSZpyf/ee1fd1a9c7c140dedb3a323092e4d33a.jpg",
   },
   {
-    from: "Dhaka",
-    to: "Sylhet",
+    from: "Sylhet",
+    to: "Dhaka",
     trips: "980",
-    image: "https://i.ibb.co/0Jmshvb/sylhet.jpg",
+    image: "https://i.ibb.co.com/S41RgpZ3/e5a3ca73c9fc34cde3106b5426a36b43.jpg",
   },
   {
-    from: "Dhaka",
+    from: "Sylhet",
     to: "Cox Bazar",
     trips: "850",
-    image: "https://i.ibb.co/Jk6JwS9/cox.jpg",
+    image: "https://i.ibb.co.com/Z6q9RxYn/83380932ff197900cce130c7cf0e64d0.jpg",
   },
   {
-    from: "Dhaka",
-    to: "Khulna",
+    from: "Sylhet",
+    to: "Rajshahi",
     trips: "720",
-    image: "https://i.ibb.co/8bJ9YkF/chittagong.jpg",
+    image: "https://i.ibb.co.com/0VGmWfWR/68fc06f583c9654dccae2ea88a4157e1.jpg",
   },
 ];
 
@@ -51,7 +53,6 @@ const PopularRoutes = () => {
             </div>
           </div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {routes.map((item, index) => (
               <div
@@ -67,24 +68,24 @@ const PopularRoutes = () => {
                   />
 
                   {/* Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"></div>
 
                   {/* Glass Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl px-4 py-2 flex items-center gap-2 text-white">
+                  <div className="absolute bottom-4 left-4 right-4 backdrop-blur-md  border border-secondary-content rounded-xl px-4 py-2 flex items-center gap-2 text-white">
                     <MapPin size={18} />
-                    <span className="font-semibold text-sm md:text-base">
-                      {item.from} → {item.to}
+                    <span className="flex items-center gap-2 font-semibold text-sm md:text-base">
+                      {item.from} <TiArrowRight /> {item.to}
                     </span>
                   </div>
                 </figure>
 
                 {/* Content */}
                 <div className="card-body p-5">
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-secondary-content text-sm">
                     <span className="font-semibold text-primary">
-                      {item.trips}+
-                    </span>{" "}
-                    trips this month
+                      {item.trips}+ &nbsp;
+                    </span>
+                     Trips this month
                   </p>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import { FaClipboardList, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { LuTicket } from "react-icons/lu";
 import { ClipboardList } from "lucide-react";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import Swal from "sweetalert2";
 
 const RequestedBookings = () => {
   const { user } = useAuth();
@@ -44,8 +45,20 @@ const RequestedBookings = () => {
   });
 
   const handleStatusUpdate = async (id, status) => {
-    await mutateAsync({ id, status });
-    refetch();
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: `You want to ${status} this ticket?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: status === "accepted" ? "#16a34a" : "#dc2626",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: `Yes, ${status}`,
+    });
+
+    if (confirm.isConfirmed) {
+      await mutateAsync({ id, status });
+      refetch();
+    }
   };
 
   const isExpired = (departureDateTime) => {
@@ -66,21 +79,21 @@ const RequestedBookings = () => {
         </p>
       </div>
 
-      <div className=" bg-white rounded-2xl shadow-md p-6 border border-accent-content">
+      <div className=" bg-secondary rounded-2xl shadow-md p-6 border border-accent-content">
         {bookingsTickets.length === 0 ? (
           <div className="flex items-center justify-center py-16">
             <div className="text-center">
               <div className="flex justify-center mb-4">
-                <div className="bg-gray-200 p-5 rounded-full">
-                  <ClipboardList className="w-8 h-8 text-gray-500" />
+                <div className="bg-base-200 p-5 rounded-full">
+                  <ClipboardList className="w-8 h-8 text-secondary-content" />
                 </div>
               </div>
 
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-primary-content">
                 No booking requests
               </h2>
 
-              <p className="text-gray-500 mt-2">
+              <p className="text-secondary-content mt-2">
                 Booking requests from customers will appear here
               </p>
             </div>
@@ -101,15 +114,15 @@ const RequestedBookings = () => {
                   {bookingsTickets.map((booking) => (
                     <div
                       key={booking._id}
-                      className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm space-y-3"
+                      className="bg-secondary border border-accent-content rounded-2xl p-4 shadow-sm space-y-3"
                     >
                       {/* Top Row */}
-                      <div className="flex justify-between items-start">
+                      <div className="flex flex-wrap gap-2 justify-between items-start">
                         <div>
                           <p className="font-semibold text-primary-content">
                             {booking.customer_Name} Hode Johone
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-secondary-content">
                             {booking.userEmail}
                           </p>
                         </div>
@@ -118,14 +131,14 @@ const RequestedBookings = () => {
                         <span
                           className={`px-3 py-1 rounded-full text-sm font-semibold ${
                             isExpired(booking.departureDateTime)
-                              ? "bg-gray-50 text-gray-600 border border-gray-200"
+                              ? "bg-[#4b5563]/10 text-secondary-content border border-[#4b5563]/40"
                               : booking.status === "pending"
-                                ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                                ? "bg-[#ca8a04]/10 text-yellow-600 border border-[#ca8a04]/40"
                                 : booking.status === "accepted"
-                                  ? "bg-green-50 text-green-600 border border-green-200"
+                                  ? "bg-[#16A34A]/10 text-green-600 border border-[#16A34A]/40"
                                   : booking.status === "paid"
-                                    ? "bg-green-50 text-green-600 border border-green-200"
-                                    : "bg-red-50 text-red-600 border border-red-200"
+                                    ? "bg-[#16A34A]/10 text-green-600 border border-[#16A34A]/40"
+                                    : "bg-[#dc2626]/10 text-red-600 border border-[#dc2626]/40"
                           }`}
                         >
                           {isExpired(booking.departureDateTime)
@@ -144,19 +157,23 @@ const RequestedBookings = () => {
 
                       {/* Ticket */}
                       <div>
-                        <p className="text-xs text-gray-500">Ticket</p>
+                        <p className="text-xs text-secondary-content">Ticket</p>
                         <p className="font-medium">{booking.ticketTitle}</p>
                       </div>
 
                       {/* Quantity + Price */}
                       <div className="flex justify-between">
                         <div>
-                          <p className="text-xs text-gray-500">Quantity</p>
+                          <p className="text-xs text-secondary-content">
+                            Quantity
+                          </p>
                           <p className="font-semibold">{booking.quantity}</p>
                         </div>
 
                         <div className="text-right">
-                          <p className="text-xs text-gray-500">Total Price</p>
+                          <p className="text-xs text-secondary-content">
+                            Total Price
+                          </p>
                           <p className="font-bold text-primary">
                             ${booking.totalPrice}
                           </p>
@@ -173,7 +190,7 @@ const RequestedBookings = () => {
                               onClick={() =>
                                 handleStatusUpdate(booking._id, "accepted")
                               }
-                              className="flex-1 flex justify-center items-center gap-1 px-3 py-1 rounded-full border border-green-500 text-green-600 hover:bg-green-50 transition"
+                              className="flex-1 flex justify-center items-center gap-1 px-3 py-1 rounded-full border border-green-500 text-green-600 hover:bg-[#16A34A]/20 transition cursor-pointer"
                             >
                               <FaCheckCircle /> Accept
                             </button>
@@ -182,7 +199,7 @@ const RequestedBookings = () => {
                               onClick={() =>
                                 handleStatusUpdate(booking._id, "rejected")
                               }
-                              className="flex-1  flex justify-center items-center gap-2 px-3 py-1 rounded-full border border-red-500 text-red-600 hover:bg-red-50 transition"
+                              className="flex-1  flex justify-center items-center gap-2 px-3 py-1 rounded-full border border-red-500 text-red-600 hover:bg-[#dc2626]/20 transition cursor-pointer"
                             >
                               <FaTimesCircle /> Reject
                             </button>
@@ -207,7 +224,7 @@ const RequestedBookings = () => {
                 <table className="table w-full">
                   <thead className=" text-secondary-content text-sm ">
                     <tr>
-                      <th>Customer</th>
+                      <th>Vendor</th>
                       <th>Ticket</th>
                       <th>Quantity</th>
                       <th>Total Price</th>
@@ -220,14 +237,14 @@ const RequestedBookings = () => {
                     {bookingsTickets.map((booking) => (
                       <tr
                         key={booking._id}
-                        className="text-sm border-b border-accent-content last:border-b-0 hover:bg-info-content transition-colors duration-200 ease-in-out "
+                        className="text-sm border-b border-accent-content last:border-b-0 "
                       >
                         <td className="text-sm">
                           <div>
                             <p className="font-medium">
-                              {booking.customer_Name} Hode Jhone
+                              {booking.userName}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-secondary-content">
                               {booking.userEmail}
                             </p>
                           </div>
@@ -246,14 +263,14 @@ const RequestedBookings = () => {
                           <span
                             className={`px-3 py-1 rounded-full text-sm font-semibold ${
                               isExpired(booking.departureDateTime)
-                                ? "bg-gray-50 text-gray-600 border border-gray-200"
+                                ? "bg-[#4b5563]/10 text-secondary-content border border-[#4b5563]/40"
                                 : booking.status === "pending"
-                                  ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                                  ? "bg-[#ca8a04]/10 text-[#ca8a04] border border-[#ca8a04]/40"
                                   : booking.status === "accepted"
-                                    ? "bg-green-50 text-green-600 border border-green-200"
+                                    ? "bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/40"
                                     : booking.status === "paid"
-                                      ? "bg-green-50 text-green-600 border border-green-200"
-                                      : "bg-red-50 text-red-600 border border-red-200"
+                                      ? "bg-[#16A34A]/10 text-[#16A34A] border border-[#16A34A]/40"
+                                      : "bg-[#dc2626]/10 text-[#dc2626] border border-[#dc2626]/40"
                             }`}
                           >
                             {isExpired(booking.departureDateTime)
@@ -272,7 +289,7 @@ const RequestedBookings = () => {
                                 onClick={() =>
                                   handleStatusUpdate(booking._id, "accepted")
                                 }
-                                className="flex items-center gap-1 px-3 py-1 rounded-full border border-green-500 text-green-600 hover:bg-green-50 transition cursor-pointer"
+                                className="flex items-center gap-1 px-3 py-1 rounded-full border border-green-500 text-green-600 hover:bg-[#16A34A]/20 transition cursor-pointer"
                               >
                                 <FaCheckCircle /> Accept
                               </button>
@@ -281,7 +298,7 @@ const RequestedBookings = () => {
                                 onClick={() =>
                                   handleStatusUpdate(booking._id, "rejected")
                                 }
-                                className="flex items-center gap-2 px-3 py-1 rounded-full border border-red-500 text-red-600 hover:bg-red-50 transition cursor-pointer"
+                                className="flex items-center gap-2 px-3 py-1 rounded-full border border-red-500 text-red-600 hover:bg-[#dc2626]/20 transition cursor-pointer"
                               >
                                 <FaTimesCircle /> Reject
                               </button>

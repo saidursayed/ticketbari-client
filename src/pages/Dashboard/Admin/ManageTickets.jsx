@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { LuTicket } from "react-icons/lu";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import Swal from "sweetalert2";
 
 const ManageTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -22,12 +23,25 @@ const ManageTickets = () => {
   });
 
   const handleStatusUpdate = async (id, status) => {
-    try {
-      await axiosSecure.patch(`/tickets/status/${id}`, { status });
-      toast.success(`Ticket ${status}`);
-      refetch();
-    } catch (err) {
-      toast.error(err.message);
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: `You want to ${status} this ticket?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: status === "approved" ? "#16a34a" : "#dc2626",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: `Yes, ${status}`,
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        await axiosSecure.patch(`/tickets/status/${id}`, { status });
+
+        toast.success(`Ticket ${status} successfully`);
+        refetch();
+      } catch (err) {
+        toast.error(err.message);
+      }
     }
   };
 
@@ -48,20 +62,20 @@ const ManageTickets = () => {
         </p>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-2xl shadow-md p-6">
+      <div className="overflow-x-auto bg-secondary rounded-2xl shadow-md p-6">
         <div className="flex items-center gap-2 mb-6">
           <LuTicket className="text-lg" />
           <h2 className="text-xl font-semibold">
             All Tickets ({tickets.length})
           </h2>
         </div>
-        
+
         <div className="block lg:hidden space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {tickets.map((ticket) => (
               <div
                 key={ticket._id}
-                className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm space-y-3"
+                className="bg-secondary border border-gray-200 rounded-2xl p-4 shadow-sm space-y-3"
               >
                 {/* Title + Status */}
                 <div className="flex justify-between items-start">

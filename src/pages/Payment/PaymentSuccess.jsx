@@ -1,40 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { IoBagCheckOutline } from "react-icons/io5";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import axios from "axios";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const axiosSecure = useAxiosSecure();
   const [paymentInfo, setPaymentInfo] = useState();
+
 
   useEffect(() => {
     if (sessionId) {
-      axiosSecure
-        .patch(`/payment-success?session_id=${sessionId}`)
-        .then((res) => {
-          console.log(res.data);
-          setPaymentInfo(res.data);
-        });
+      axios.patch(`${import.meta.env.VITE_API_URL}/payment-success?session_id=${sessionId}`).then((res) => {
+        console.log(res.data);
+        setPaymentInfo(res.data);
+      });
     }
-  }, [axiosSecure, sessionId]);
+  }, [sessionId]);
   console.log(paymentInfo);
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="bg-white p-10 rounded-lg shadow-lg text-center">
-        <IoBagCheckOutline className="w-16 h-16 text-green-500 mx-auto mb-4" />
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+    <div className="min-h-screen flex items-center justify-center bg-base-100 px-4">
+      <div className="w-full max-w-lg text-center bg-secondary border border-accent-content rounded-2xl shadow-md p-8 relative overflow-hidden">
+        <div className="flex items-center justify-center w-20 h-20 mx-auto rounded-full bg-green-500/20 mb-5">
+          <IoBagCheckOutline className="w-10 h-10 text-green-600" />
+        </div>
+
+        <h1 className="text-2xl md:text-3xl font-bold text-primary-content mb-2">
           Payment Successful!
         </h1>
-        <p className="text-gray-600 mb-6">
-          Thank you for your purchase. Your order is being processed.
+
+        <p className="text-primary-content/70 mb-6 text-sm md:text-base">
+          Your order has been confirmed. You can track it anytime from your
+          dashboard.
         </p>
+
         <Link
           to="/dashboard/transaction-history"
-          className="inline-block bg-lime-500 text-white font-semibold py-2 px-4 rounded hover:bg-lime-600 transition duration-300"
+          className="px-4 py-2 rounded-lg bg-primary text-white font-semibold 
+              hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg "
         >
-          Go to My Orders
+          View Orders
         </Link>
       </div>
     </div>

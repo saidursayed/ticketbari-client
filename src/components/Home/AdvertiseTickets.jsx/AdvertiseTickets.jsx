@@ -4,28 +4,30 @@ import React from "react";
 import Container from "../../Shared/Container/Container";
 import TicketCard from "../TicketCard/TicketCard";
 import { GoMegaphone } from "react-icons/go";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 
 const AdvertiseTickets = () => {
   const { data: advertiseTickets = [], isLoading } = useQuery({
     queryKey: ["advertiseTickets"],
     queryFn: async () => {
-      const result = await axios.get(`http://localhost:3000/advertiseTickets`);
+      const result = await axios.get(
+        `${import.meta.env.VITE_API_URL}/advertiseTickets`,
+      );
       return result.data;
     },
   });
 
-  if (isLoading) return <span>Loading...</span>;
   return (
     <div className="bg-info-content py-16">
       <Container>
         <div>
-          <div className="flex items-center gap-3 mb-10">
-            <div className="bg-primary/10 p-3 rounded-xl">
+          <div className="flex items-center gap-2 md:gap-3 mb-10">
+            <div className="bg-primary/10 p-4 rounded-xl">
               <GoMegaphone className="text-primary" size={24} />
             </div>
 
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-primary-content">
+              <h2 className="text-xl md:text-3xl font-bold text-primary-content">
                 Featured Tickets
               </h2>
               <p className="text-secondary-content font-medium">
@@ -34,11 +36,15 @@ const AdvertiseTickets = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {advertiseTickets.map((ticket) => (
-              <TicketCard key={ticket._id} ticket={ticket}></TicketCard>
-            ))}
-          </div>
+          {isLoading ? (
+            <LoadingSpinner></LoadingSpinner>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {advertiseTickets.map((ticket) => (
+                <TicketCard key={ticket._id} ticket={ticket}></TicketCard>
+              ))}
+            </div>
+          )}
         </div>
       </Container>
     </div>

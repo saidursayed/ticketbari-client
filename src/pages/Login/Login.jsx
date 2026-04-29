@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { saveOrUpdateUser } from "../../utils";
 import useAuth from "../../hooks/useAuth";
 import Container from "../../components/Shared/Container/Container";
@@ -12,8 +12,6 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state || "/";
 
   const {
     register,
@@ -29,7 +27,7 @@ const Login = () => {
       await signIn(email, password);
 
       toast.success("Login Successful");
-      navigate(from, { replace: true });
+      navigate("/");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -48,7 +46,7 @@ const Login = () => {
         image: user?.photoURL,
       });
 
-      navigate(from, { replace: true });
+      navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
       console.log(err);
@@ -58,19 +56,18 @@ const Login = () => {
     }
   };
 
-  // if (isSubmitting) return <p>Loading...</p>;
   return (
     <div>
       <Container>
-        <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] py-4 sm:py-6 lg:py-8">
-          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+        <div className="min-h-screen flex items-center justify-center bg-base-100 py-4 sm:py-6 lg:py-8">
+          <div className="w-full max-w-md bg-secondary rounded-2xl shadow-xl p-8 border border-accent-content">
             {/* Header */}
             <div className="text-center mb-6">
-              <h1 className="text-3xl font-bold text-[#002C3F]">
+              <h1 className="text-3xl font-bold text-primary-content">
                 Welcome Back
               </h1>
-              <p className="text-gray-500 mt-2 font-medium">
-                Sign in to continue to your account
+              <p className="text-secondary-content mt-2 font-medium">
+                Sign in to your TicketBari account
               </p>
             </div>
 
@@ -78,12 +75,12 @@ const Login = () => {
             <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
               {/* Email */}
               <div>
-                <label className="text-sm text-gray-600">Email</label>
+                <label className="text-sm text-secondary-content">Email</label>
                 <input
                   type="email"
                   name="email"
                   placeholder="Enter your email"
-                  className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 text-gray-800 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#CEB45F]"
+                  className="input-style"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -101,12 +98,14 @@ const Login = () => {
 
               {/* Password */}
               <div>
-                <label className="text-sm text-gray-600">Password</label>
+                <label className="text-sm text-secondary-content">
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
-                  placeholder="********"
-                  className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-100 text-gray-800 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#CEB45F]"
+                  placeholder="Enter your password"
+                  className="input-style"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -131,44 +130,48 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 rounded-lg bg-[#CEB45F] text-black font-semibold hover:bg-[#b39328] transition duration-300 shadow-md cursor-pointer"
+                className="w-full py-3 rounded-lg bg-primary text-secondary font-semibold hover:bg-primary/90 transition duration-300 shadow-md cursor-pointer"
               >
-                {isSubmitting ? "Logging in..." : "Log In"}
+                {isSubmitting ? "Signing in..." : "Sign In"}
               </button>
             </form>
 
             <div className="text-right mt-2">
-              <button className="text-xs text-gray-500 hover:text-[#CEB45F] hover:underline">
+              <button className="text-xs text-secondary-content hover:text-primary cursor-pointer transition hover:underline">
                 Forgot password?
               </button>
             </div>
 
             {/* Divider */}
             <div className="flex items-center my-6">
-              <div className="flex-1 h-px bg-gray-300"></div>
-              <p className="px-3 text-gray-400 text-sm">or continue with</p>
-              <div className="flex-1 h-px bg-gray-300"></div>
+              <div className="flex-1 h-px bg-accent-content"></div>
+              <p className="px-3 text-secondary-content text-sm">
+                or continue with
+              </p>
+              <div className="flex-1 h-px bg-accent-content"></div>
             </div>
 
             {/* Google */}
-            <div className="flex justify-center">
+            <div className="flex justify-center w-full">
               <button
                 onClick={handleGoogleSignIn}
                 disabled={googleLoading}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-white border border-[#CEB45F] shadow-sm hover:shadow-lg  transition-all duration-300 cursor-pointer"
+                className="group w-full flex items-center justify-center gap-3 py-3 rounded-xl border-[1.5px] border-accent-content bg-secondary text-primary-content font-semibold text-sm shadow-sm hover:shadow-md hover:bg-base-200 transition-all duration-200 disabled:opacity-80 cursor-pointer disabled:cursor-not-allowed"
               >
-                <FcGoogle size={22} />
+                {/* Icon */}
+                <FcGoogle className="text-xl transition-transform duration-200 group-hover:scale-110" />
 
-                <span className="text-[#002C3F] font-semibold">
+                {/* Text */}
+                <span className="text-primary-content font-semibold">
                   {googleLoading ? "Signing in..." : "Continue with Google"}
                 </span>
               </button>
             </div>
 
-            {/* Footer */}
-            <p className="text-center text-gray-500 mt-6 text-sm">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-[#CEB45F] hover:underline">
+          
+            <p className="text-center text-secondary-content mt-6 text-sm">
+              Don't have an account ? &nbsp;
+              <Link to="/register" className="text-primary hover:underline">
                 Sign Up
               </Link>
             </p>
@@ -176,7 +179,6 @@ const Login = () => {
         </div>
       </Container>
     </div>
-    // light - #F8FAFC dark - #002C3F
   );
 };
 

@@ -45,7 +45,7 @@ const WhyChooseTicketBari = () => {
   return (
     <div className="bg-base-100 py-16">
       <Container>
-        <div >
+        <div>
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-content">
@@ -61,7 +61,7 @@ const WhyChooseTicketBari = () => {
             {features.map((item, index) => (
               <div
                 key={index}
-                className="bg-info-content rounded-2xl shadow-sm hover:shadow-md transition duration-300 px-6 py-10 flex gap-4 items-start lg:card"
+                className="bg-info-content rounded-2xl shadow-sm hover:shadow-md transition duration-300 px-6 py-10 flex gap-4 items-start border border-accent-content lg:card"
               >
                 {/* Icon */}
                 <div className="bg-primary/10 p-3 rounded-xl">{item.icon}</div>
@@ -71,7 +71,9 @@ const WhyChooseTicketBari = () => {
                   <h3 className="font-semibold text-primary-content text-lg">
                     {item.title}
                   </h3>
-                  <p className="text-secondary-content text-sm mt-1">{item.desc}</p>
+                  <p className="text-secondary-content text-sm mt-1">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}

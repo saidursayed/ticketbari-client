@@ -17,6 +17,8 @@ const TransactionHistory = () => {
     },
   });
 
+  console.log(payments)
+
   const totalAmount = payments.reduce(
     (sum, item) => sum + (item.amount || 0),
     0,
@@ -36,20 +38,20 @@ const TransactionHistory = () => {
       </div>
 
       {payments.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-md p-6 border border-accent-content">
+        <div className="bg-secondary rounded-2xl shadow-md p-6 border border-accent-content">
           <div className="flex items-center justify-center py-16 ">
             <div className="text-center">
               <div className="flex justify-center mb-4">
-                <div className="bg-gray-200 p-5 rounded-full">
-                  <LuReceipt className="w-8 h-8 text-gray-500" />
+                <div className="bg-base-200 p-5 rounded-full">
+                  <LuReceipt className="w-8 h-8 text-secondary-content" />
                 </div>
               </div>
 
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-primary-content">
                 No transactions yet
               </h2>
 
-              <p className="text-gray-500 mt-2">
+              <p className="text-secondary-content mt-2">
                 Your payment history will appear here after completing a booking
               </p>
             </div>
@@ -60,7 +62,7 @@ const TransactionHistory = () => {
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             {/* Total Spent Card */}
-            <div className="bg-white border border-accent-content rounded-2xl p-8 flex items-center gap-5 shadow-sm">
+            <div className="bg-secondary border border-accent-content rounded-2xl p-8 flex items-center gap-5 shadow-sm">
               <div className="bg-primary/10 p-4 rounded-xl text-primary">
                 <CreditCard className="w-8 h-8" />
               </div>
@@ -73,13 +75,13 @@ const TransactionHistory = () => {
             </div>
 
             {/* Total Transactions Card */}
-            <div className="bg-white border border-accent-content rounded-2xl p-8 flex items-center gap-5 shadow-sm">
+            <div className="bg-secondary border border-accent-content rounded-2xl p-8 flex items-center gap-5 shadow-sm">
               <div className="bg-[#00bb87]/10 p-4 rounded-xl text-[#00bb87]">
                 <LuReceipt className="w-8 h-8" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm">Total Transactions</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-secondary-content text-sm">Total Transactions</p>
+                <p className="text-3xl font-bold text-primary-content">
                   {payments.length}
                 </p>
               </div>
@@ -101,7 +103,7 @@ const TransactionHistory = () => {
                 {payments.map((p) => (
                   <div
                     key={p._id}
-                    className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 space-y-3"
+                    className="bg-secondary rounded-2xl shadow-sm border border-accent-content p-4 space-y-3"
                   >
                     {/* Top Row */}
                     <div className="flex justify-between items-center">
@@ -148,7 +150,7 @@ const TransactionHistory = () => {
                           Amount
                         </p>
                         <p className="text-lg font-bold text-primary">
-                          ৳{p.amount}
+                          ${p.amount}
                         </p>
                       </div>
 
@@ -175,7 +177,7 @@ const TransactionHistory = () => {
             </div>
           </div>
 
-          <div className="hidden lg:block bg-white border border-accent-content rounded-2xl shadow-sm overflow-hidden px-6">
+          <div className="hidden lg:block bg-secondary border border-accent-content rounded-2xl shadow-sm overflow-hidden px-6">
             <div className="p-6 flex items-center gap-3">
               <CreditCard className="w-5 h-5" />
               <h2 className="font-semibold text-lg">Payment History</h2>
@@ -197,7 +199,7 @@ const TransactionHistory = () => {
                   {payments.map((payment) => (
                     <tr
                       key={payment._id}
-                      className="text-sm border-b border-accent-content last:border-b-0 hover:bg-info-content transition-colors duration-200 ease-in-out "
+                      className="text-sm border-b border-accent-content last:border-b-0  "
                     >
                       <td className="px-6 py-4 text-primary-content/90">
                         {payment.transactionId}

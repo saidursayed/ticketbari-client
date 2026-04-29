@@ -1,16 +1,71 @@
-# React + Vite
+# 🎟️ Ticket Booking Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Project Purpose
+This project is a full-stack Ticket Booking Platform where users can browse, search, filter, and book tickets for different transport types. It provides a smooth user experience with modern UI, authentication, and secure payment integration.
 
-Currently, two official plugins are available:
+---
+## 🚀 Live URL
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🌐 Live Client Site: https://ticketbari-app.web.app
+🌐 Live Server Site: https://ticketbari-server-indol.vercel.app
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📂 GitHub Repositories:
 
-## Expanding the ESLint configuration
+Client: https://github.com/saidursayed/ticketbari-client.git
+Server: https://github.com/saidursayed/ticketbari-server.gitt
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+
+---
+
+## ✨ Key Features
+
+- 🔍 Search tickets by **From → To location**
+- 🚍 Filter tickets by **transport type**
+- 💰 Sort tickets by **price (Low → High / High → Low)**
+- 📄 Pagination support (6–9 tickets per page)
+- 🔐 User authentication (Firebase)
+- 🎫 Ticket booking system with modal
+- 💳 Secure payment integration using Stripe
+- 📊 Dashboard with ticket management (Add, Update, Delete)
+- ⚡ Fast data fetching with React Query
+- 🎉 Toast & alert notifications
+- 📱 Fully responsive UI (Tailwind CSS)
+
+---
+
+## 🛠️ Tech Stack
+
+## 🧰 Frontend Technologies & Packages
+
+- **React**
+- **React Router**
+- **Tailwind CSS**
+- **@tanstack/react-query**
+- **Axios**
+- **Firebase Authentication**
+- **React Hook Form**
+- **React Hot Toast**
+- **SweetAlert2**
+- **Headless UI**
+- **Lucide React Icons**
+- **React Icons**
+- **React Countdown**
+- **React Spinners**
+- **Recharts (Charts & Analytics)**
+
+---
+
+## 🛠️ Backend Technologies & Packages
+
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **Firebase Admin SDK**
+- **Stripe Payment Gateway**
+- **dotenv**
+- **cors**
+

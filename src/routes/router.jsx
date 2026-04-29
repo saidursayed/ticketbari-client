@@ -19,6 +19,7 @@ import AllTickets from "../pages/AllTickets/AllTickets";
 import TicketDetails from "../pages/TicketDetails/TicketDetails";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import PaymentCancel from "../pages/Payment/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
         path: "/payment-success",
         Component: PaymentSuccess,
       },
+      {
+        path: "/payment-cancelled",
+        Component: PaymentCancel
+      }
     ],
   },
   {
@@ -61,8 +66,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        // index: true,
-        path: "profile",
+        index: true,
         element: <Profile></Profile>,
       },
       {

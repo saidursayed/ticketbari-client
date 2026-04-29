@@ -1,19 +1,25 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import logo from "../../../assets/images/ticketbarilogo.png";
-import { FaRegUser } from "react-icons/fa";
+import { FaBars, FaRegUser } from "react-icons/fa";
 import { BiLock } from "react-icons/bi";
-import { GoHome } from "react-icons/go";
 import { LuTickets } from "react-icons/lu";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { MdLogout, MdOutlineSpaceDashboard } from "react-icons/md";
 import Container from "../Container/Container";
+import { FiSun, FiMoon, FiUser, FiGrid } from "react-icons/fi";
+import useTheme from "../../../hooks/useTheme";
+import { FiHome } from "react-icons/fi";
+import toast from "react-hot-toast";
+import useRole from "../../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  
+  const { role } = useRole();
+  const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   const navItems = [
-    { name: "Home", path: "/", icon: GoHome },
+    { name: "Home", path: "/", icon: FiHome },
     { name: "All Tickets", path: "/all-tickets", icon: LuTickets },
     ...(user
       ? [
@@ -26,8 +32,19 @@ const Navbar = () => {
       : []),
   ];
 
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      toast.success("Logout successful!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Logout failed!");
+      console.log(error);
+    }
+  };
+
   return (
-    <div className=" fixed w-full backdrop-blur-md bg-white/20 border-b border-white/30 z-100 shadow-sm">
+    <div className=" fixed w-full backdrop-blur-md bg-transparent z-100 shadow-sm border-b border-accent-content">
       <Container>
         <div className="navbar m-0 p-0 py-3">
           <div className="navbar-start">
@@ -35,23 +52,9 @@ const Navbar = () => {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost lg:hidden"
+                className="btn btn-ghost lg:hidden btn-circle hover:bg-primary/20"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {" "}
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />{" "}
-                </svg>
+                <FaBars size={18} />
               </div>
               <ul
                 tabIndex="-1"
@@ -72,7 +75,7 @@ const Navbar = () => {
                           }`
                         }
                       >
-                        <Icon  size={18}/>
+                        <Icon size={18} />
                         {item.name}
                       </NavLink>
                     </li>
@@ -80,10 +83,11 @@ const Navbar = () => {
                 })}
               </ul>
             </div>
-            <Link to="">
+            <Link className="ml-2" to="/">
               <img src={logo} alt="logo" className="h-10" />
             </Link>
           </div>
+
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 gap-3">
               {navItems.map((item, i) => {
@@ -109,30 +113,64 @@ const Navbar = () => {
               })}
             </ul>
           </div>
+
           <div className="navbar-end">
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className={`p-2 rounded-xl border border-accent-content transition mr-4  hover:bg-primary cursor-pointer ${theme === "light" && "hover:text-secondary"}`}
+            >
+              {theme === "light" ? (
+                <FiMoon className="text-xl " />
+              ) : (
+                <FiSun className="text-xl text-yellow-400" />
+              )}
+            </button>
+
             {user ? (
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="cursor-pointer">
                   <img
                     src={user?.photoURL}
                     alt={user?.displayName}
-                    className="w-10 h-10 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover "
                   />
                 </div>
 
-                <ul className="mt-3 p-2 shadow-lg menu menu-sm dropdown-content bg-white rounded-xl w-52 text-gray-700">
-                  <li className="font-semibold px-2 py-1">
-                    {user?.displayName}
+                <ul className=" w-72  overflow-hidden dropdown-content z-50 mt-5  bg-secondary rounded-2xl shadow-lg border border-accent-content dropdown-content">
+                  {/* User Info */}
+                  <li className="px-3 py-2 border-b-[1.5px] border-accent-content">
+                    <h3 className="text font-medium text-primary-content">
+                      {user?.displayName || "User"}
+                    </h3>
+
+                    <p className="text-sm text-secondary-content mt-0.5">
+                      {user?.email}
+                    </p>
+
+                    <div className="mt-2">
+                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                        {role}
+                      </span>
+                    </div>
                   </li>
-                  <li>
-                    <Link className="hover:text-[#ffa633]">Profile</Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={logOut}
-                      className="text-red-500 hover:bg-red-100 w-full text-left px-3 py-2 rounded-md transition"
+
+                  <li className="p-2">
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary-content hover:bg-primary/10 transition-all duration-200"
                     >
-                      Logout
+                      <FiUser className="text-lg" />
+                      <span className="text-sm font-medium">My Profile</span>
+                    </Link>
+                  </li>
+
+                  <li className="border-t-[1.5px] border-accent-content p-2">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-[#EF4444]/10  transition-all duration-200 cursor-pointer font-semibold"
+                    >
+                      <MdLogout className="text-lg" />
+                      <span className="text-sm ">Logout</span>
                     </button>
                   </li>
                 </ul>
@@ -142,19 +180,19 @@ const Navbar = () => {
                 {/* Sign In */}
                 <Link
                   to="/login"
-                  className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:border-[#CEB45F] hover:text-[#CEB45F] transition flex items-center gap-2"
+                  className="group flex items-center gap-2 px-5 py-2.5 rounded-lg border border-primary/30 text-[#ffffff] sm:text-primary-content text-sm font-semibold bg-primary sm:bg-transparent hover:bg-primary hover:text-[#ffffff] transition-all duration-300"
                 >
-                  <FaRegUser />
-                  Sign In
+                  <FaRegUser className="text-base" />
+                  <span>Sign In</span>
                 </Link>
 
                 {/* Sign Up */}
                 <Link
                   to="/register"
-                  className="px-5 py-2 rounded-lg bg-[#CEB45F] text-white font-semibold hover:bg-[#ffa633] transition flex items-center gap-2 shadow-md"
+                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-[#ffffff] text-sm font-semibold shadow-sm hover:shadow-md hover:bg-primary/90 transition-all duration-200"
                 >
-                  <BiLock />
-                  Sign Up
+                  <BiLock className="text-base" />
+                  <span>Sign Up</span>
                 </Link>
               </div>
             )}

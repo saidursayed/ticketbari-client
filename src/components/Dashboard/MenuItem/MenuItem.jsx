@@ -13,7 +13,7 @@ const MenuItem = ({ label, address, icon: Icon }) => {
           ${
             isActive
               ? "text-white bg-primary shadow-sm"
-              : "text-primary-content/70 hover:bg-primary/20 hover:text-primary"
+              : "text-primary-content/80 hover:bg-primary/20 hover:text-primary"
           }
           `
         }
@@ -32,7 +32,7 @@ const MenuItem = ({ label, address, icon: Icon }) => {
 
         {/* Active indicator */}
         <span
-          className={`absolute left-0 top-0 h-full w-1 rounded-r-full bg-[#CEB45F] transition-all duration-300 ${"opacity-0 group-[.active]:opacity-100"}`}
+          className={`absolute left-0 top-0 h-full w-1 rounded-r-full bg-primary transition-all duration-300 ${"opacity-0 group-[.active]:opacity-100"}`}
         ></span>
       </NavLink>
     </li>

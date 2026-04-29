@@ -23,7 +23,7 @@ const TicketCard = ({ ticket }) => {
   });
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group overflow-hidden border border-accent-content flex flex-col h-full">
+    <div className="bg-secondary rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group overflow-hidden border border-accent-content flex flex-col h-full">
       {/* Image */}
       <div className="relative overflow-hidden">
         <img
@@ -33,7 +33,7 @@ const TicketCard = ({ ticket }) => {
         />
 
         {ticket.isAdvertised && (
-          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-white text-sm font-semibold px-10 py-1 shadow-lg z-20">
+          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-secondary text-sm font-semibold px-10 py-1 shadow-lg z-20">
             Featured
           </div>
         )}
@@ -41,45 +41,43 @@ const TicketCard = ({ ticket }) => {
         {/* Transport Badge */}
         <div className="absolute top-3 right-3 z-10">
           {ticket.transport === "Bus" && (
-            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuBus size={16} />
               <span className="text-sm font-medium">Bus</span>
             </div>
           )}
 
           {ticket.transport === "Train" && (
-            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <PiTrain size={16} />
               <span className="text-sm font-medium">Train</span>
             </div>
           )}
 
           {ticket.transport === "Launch" && (
-            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <IoBoatOutline size={16} />
               <span className="text-sm font-medium">Launch</span>
             </div>
           )}
 
           {ticket.transport === "Plane" && (
-            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuPlane size={16} />
               <span className="text-sm font-medium">Plane</span>
             </div>
           )}
-        </div>
-
-        {/* Title */}
-        <div className="absolute bottom-4 left-4 z-10 text-white">
-          <h2 className="text-xl font-bold drop-shadow-lg">
-            {ticket.ticketTitle}
-          </h2>
         </div>
       </div>
 
       {/* Content */}
       <div className="flex flex-col grow">
         <div className="p-4 space-y-4">
+          <div className="text-primary-content">
+            <h2 className="text-xl font-bold drop-shadow-lg">
+              {ticket.ticketTitle}
+            </h2>
+          </div>
           {/* Route */}
           <div className="flex justify-between items-center bg-base-300 rounded-xl p-3 group-hover:bg-primary/8 transition">
             <h3 className="font-semibold">{ticket.from}</h3>
@@ -114,7 +112,7 @@ const TicketCard = ({ ticket }) => {
             {ticket.perks?.map((perk, i) => (
               <span
                 key={i}
-                className="bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full hover:bg-primary hover:text-white transition"
+                className="bg-base-200 text-primary text-xs font-semibold px-2 py-1 rounded-full hover:bg-primary hover:text-secondary transition"
               >
                 {perk}
               </span>
@@ -136,13 +134,13 @@ const TicketCard = ({ ticket }) => {
 
             <Link
               to={`/tickets/${ticket._id}`}
-              className="btn relative overflow-hidden border-2 border-primary text-white bg-primary rounded-lg group/btn"
+              className="btn relative overflow-hidden border-2 border-primary text-secondary bg-primary rounded-lg group/btn"
             >
               <span className="relative z-10 group-hover/btn:text-primary transition flex items-center">
                 See details
               </span>
 
-              <span className="absolute left-0 top-0 w-full h-0 bg-white transition-all duration-300 group-hover/btn:h-full"></span>
+              <span className="absolute left-0 top-0 w-full h-0 bg-secondary transition-all duration-300 group-hover/btn:h-full"></span>
             </Link>
           </div>
         </div>

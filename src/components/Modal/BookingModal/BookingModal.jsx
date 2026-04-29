@@ -1,15 +1,18 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import React, { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { RxCross1 } from "react-icons/rx";
 import { FaArrowRightLong } from "react-icons/fa6";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router";
 
 const BookingModal = ({ ticket, closeModal, isOpen }) => {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     _id,
@@ -25,8 +28,8 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (bookingData) => {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ticket-bookings`,
+      const res = await axiosSecure.post(
+        `/ticket-bookings`,
         bookingData,
       );
       if (res.data?.message) {
@@ -38,6 +41,7 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
     onSuccess: () => {
       toast.success("Booking Successful 🎉");
       closeModal();
+      navigate("/dashboard/booked-tickets")
     },
 
     onError: (error) => {
@@ -89,7 +93,7 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
       <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
+        <DialogPanel className="w-full max-w-md bg-secondary rounded-2xl shadow-xl p-6">
           {/* Header */}
           <div className="flex justify-between items-center">
             <DialogTitle className="text-lg font-semibold">
@@ -170,7 +174,7 @@ const BookingModal = ({ ticket, closeModal, isOpen }) => {
             <button
               onClick={handleBooking}
               disabled={isPending}
-              className={`w-full py-2 rounded-lg text-white transition cursor-pointer ${
+              className={`w-full py-2 rounded-lg text-secondary transition cursor-pointer ${
                 isPending ? "bg-primary/50" : "bg-primary/90 hover:bg-primary"
               }`}
             >

@@ -95,7 +95,7 @@ const AddTicketForm = () => {
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-xl rounded-2xl p-8 space-y-6 border-[1.5px] border-accent-content"
+          className="bg-secondary shadow-xl rounded-2xl p-8 space-y-6 border-[1.5px] border-accent-content"
         >
           <fieldset disabled={isPending || uploading} className="space-y-6">
             <div>
@@ -237,7 +237,7 @@ const AddTicketForm = () => {
 
             {/* Perks */}
             <div>
-              <label className="text-sm font-semibold text-gray-700">
+              <label className="text-sm font-semibold text-secondary-content">
                 Perks
               </label>
 
@@ -260,7 +260,7 @@ const AddTicketForm = () => {
                 ].map((perk) => (
                   <label
                     key={perk}
-                    className="flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer hover:bg-blue-50 transition"
+                    className="flex items-center gap-2 px-3 py-2 border border-accent-content rounded-lg cursor-pointer"
                   >
                     <input
                       type="checkbox"
@@ -268,7 +268,6 @@ const AddTicketForm = () => {
                       {...register("perks", {
                         required: "At least one perk is required",
                       })}
-                      className="accent-blue-600"
                     />
                     {perk}
                   </label>
@@ -298,7 +297,7 @@ const AddTicketForm = () => {
                   {...register("ticketImage", {
                     required: "Image is required",
                   })}
-                  className="block w-full text-sm text-secondary-content file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-white file:bg-primary file:hover:bg-primary/80 file:transition-all file:cursor-pointer file:shadow-sm border-[1.5px] border-dashed border-accent-content p-3 bg-info-content rounded-xl"
+                  className="block w-full text-sm text-secondary-content file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-primary-content file:bg-primary file:hover:bg-primary/80 file:transition-all file:cursor-pointer file:shadow-sm border-[1.5px] border-dashed border-accent-content p-3 bg-secondary rounded-xl"
                 />
               </div>
 
@@ -319,7 +318,7 @@ const AddTicketForm = () => {
                   defaultValue={user?.displayName || ""}
                   readOnly
                   {...register("vendorName", { required: true })}
-                  className="input-style bg-info-content font-medium"
+                  className="input-style bg-secondary-content font-medium"
                 />
               </div>
               <div>
@@ -330,7 +329,7 @@ const AddTicketForm = () => {
                   defaultValue={user?.email || ""}
                   readOnly
                   {...register("vendorEmail", { required: true })}
-                  className="input-style bg-info-content font-medium"
+                  className="input-style bg-secondary-content font-medium"
                 />
               </div>
             </div>
@@ -339,7 +338,7 @@ const AddTicketForm = () => {
             <button
               type="submit"
               disabled={isPending || uploading}
-              className="w-full bg-primary/90 hover:bg-primary text-white py-3 rounded-xl font-semibold transition cursor-pointer flex items-center justify-center gap-1"
+              className="w-full bg-primary/90 hover:bg-primary text-secondary py-3 rounded-xl font-semibold transition cursor-pointer flex items-center justify-center gap-1"
             >
               {isPending || uploading ? (
                 <>

@@ -37,7 +37,6 @@ const AddedTicketCard = ({ ticket, refetch }) => {
       return result.data;
     },
     onSuccess: () => {
-      //refetch
       refetch();
     },
     onError: (error) => {
@@ -74,7 +73,7 @@ const AddedTicketCard = ({ ticket, refetch }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden border-[1.5px] border-accent-content hover:shadow-lg transition relative">
+    <div className="bg-secondary rounded-2xl shadow-md overflow-hidden border-[1.5px] border-accent-content hover:shadow-lg transition relative">
       {/* Ticket Image */}
       <div className="relative">
         <img
@@ -84,12 +83,12 @@ const AddedTicketCard = ({ ticket, refetch }) => {
         />
 
         {ticket.isAdvertised && (
-          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-white text-sm font-semibold px-10 py-1 shadow-lg z-20">
+          <div className="absolute top-5 -left-9 -rotate-45 bg-red-500 text-secondary text-sm font-semibold px-10 py-1 shadow-lg z-20">
             Featured
           </div>
         )}
 
-        {/* ✅ Status Badge */}
+        {/* Status Badge */}
         <span
           className={`${ticket.isAdvertised && "left-18"} absolute top-3 left-3 z-20 px-3 py-1 rounded-full text-sm font-semibold ${
             ticket.verificationStatus === "approved"
@@ -105,28 +104,28 @@ const AddedTicketCard = ({ ticket, refetch }) => {
         {/* Transport Badge */}
         <span className="absolute top-3 right-3 z-20">
           {ticket.transport === "Bus" && (
-            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-primary/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuBus size={16} />
               <span className="text-sm font-medium">Bus</span>
             </div>
           )}
 
           {ticket.transport === "Train" && (
-            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#00bb87]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <PiTrain size={16} />
               <span className="text-sm font-medium">Train</span>
             </div>
           )}
 
           {ticket.transport === "Launch" && (
-            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#ec5a00]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <IoBoatOutline size={16} />
               <span className="text-sm font-medium">Launch</span>
             </div>
           )}
 
           {ticket.transport === "Plane" && (
-            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-white shadow">
+            <div className="flex items-center gap-2 bg-[#9260da]/90 backdrop-blur px-3 py-1 rounded-full text-secondary shadow">
               <LuPlane size={16} />
               <span className="text-sm font-medium">Plane</span>
             </div>
@@ -153,7 +152,7 @@ const AddedTicketCard = ({ ticket, refetch }) => {
 
           <div className="flex flex-col items-center gap-1">
             <div className="relative flex items-center justify-center">
-              <div className="relative z-10 bg-white border border-accent-content rounded-full p-2 shadow-sm">
+              <div className="relative z-10 bg-secondary border border-accent-content rounded-full p-2 shadow-sm">
                 <ArrowRight className="text-primary" size={18} />
               </div>
             </div>
@@ -168,6 +167,7 @@ const AddedTicketCard = ({ ticket, refetch }) => {
             </h2>
           </div>
         </div>
+        
         {/* Date & Time */}
         <div className="flex items-center gap-4 text-sm text-secondary-content">
           <div className="flex-1 flex items-center gap-2 bg-base-200 p-2 rounded-md">
@@ -203,8 +203,8 @@ const AddedTicketCard = ({ ticket, refetch }) => {
               disabled={ticket.verificationStatus === "rejected"}
               className={`flex-1 flex  justify-center items-center gap-2 px-5 py-2 rounded-lg font-semibold border-[1.5px] border-accent-content transition ${
                 ticket.verificationStatus === "rejected"
-                  ? "bg-gray-300 text-white cursor-not-allowed"
-                  : "text-primary hover:text-white hover:bg-primary cursor-pointer"
+                  ? "bg-gray-300 text-secondary cursor-not-allowed"
+                  : "text-primary hover:text-secondary hover:bg-primary cursor-pointer"
               }`}
             >
               <FiEdit />
@@ -222,8 +222,8 @@ const AddedTicketCard = ({ ticket, refetch }) => {
               disabled={ticket.verificationStatus === "rejected" || isPending}
               className={`flex-1 px-5 py-2 rounded-lg  font-semibold  flex items-center justify-center gap-2 border-[1.5px] border-accent-content transition ${
                 ticket.verificationStatus === "rejected"
-                  ? "bg-gray-300 text-white cursor-not-allowed"
-                  : "text-red-600 hover:text-white hover:bg-red-600 cursor-pointer"
+                  ? "bg-gray-300 text-secondary cursor-not-allowed"
+                  : "text-red-600 hover:text-secondary hover:bg-red-600 cursor-pointer"
               }`}
             >
               {isPending ? (

@@ -13,15 +13,14 @@ const ErrorPage = () => {
       <h2 className="text-2xl md:text-3xl font-bold mt-4">
         Oops! Page not found
       </h2>
-      <p className="text-gray-500 mt-2 max-w-md">
+      <p className="text-secondary-content mt-2 max-w-md">
         The page you are looking for might have been removed or does not exist.
       </p>
 
-      {/* Button */}
 
       <Link
         to="/"
-        className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition"
+        className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-primary text-secondary rounded-lg shadow hover:bg-primary/90 transition"
       >
         <FaArrowLeftLong />
         <span>Back to Home</span>

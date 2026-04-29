@@ -6,23 +6,15 @@ import { HiOutlineMail } from "react-icons/hi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import useRole from "../../../hooks/useRole";
+import AdminInfoCard from "../../../components/Dashboard/AdminInfoCard/AdminInfoCard";
 
 const Profile = () => {
-  // const user = {
-  //   name: "Google User",
-  //   email: "googleuser1776015924944@gmail.com",
-  //   role: "User",
-  //   status: "Active",
-  //   avatar: "https://i.ibb.co/2kR5zqM/avatar.png",
-  // };
-
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const {
-    data: profileUser = [],
-    isLoading,
-    // refetch,
-  } = useQuery({
+  const { role } = useRole();
+
+  const { data: profileUser = [], isLoading } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const result = await axiosSecure.get(`/users/${user?.email}`);
@@ -54,7 +46,7 @@ const Profile = () => {
       </div>
 
       {/* Profile Card */}
-      <div className="bg-base-100 rounded-2xl shadow-sm p-6 flex items-center gap-3 border border-accent-content">
+      <div className="bg-secondary rounded-2xl shadow-sm p-6 flex items-center gap-3 border border-accent-content">
         <img
           src={profileUser.image}
           alt="avatar"
@@ -66,16 +58,18 @@ const Profile = () => {
             {profileUser.name}
           </h2>
           <p className="text-primary-content/70">{profileUser.email}</p>
-          <span className="inline-block mt-1 text-sm bg-primary text-white px-3 py-1 rounded-full font-medium">
+          <span className="inline-block mt-1 text-sm bg-primary text-secondary px-3 py-1 rounded-full font-medium">
             {profileUser.role}
           </span>
         </div>
       </div>
 
+      {role === "admin" && <AdminInfoCard></AdminInfoCard>}
+
       {/* Bottom Grid */}
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         {/* Account Details */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-accent-content">
+        <div className="bg-secondary rounded-2xl shadow-sm p-6 border border-accent-content">
           <h3 className="font-semibold text-primary-content mb-4 flex items-center gap-2">
             <FiUser size={18} /> Account Details
           </h3>
@@ -108,7 +102,7 @@ const Profile = () => {
         </div>
 
         {/* Role & Status */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-accent-content">
+        <div className="bg-secondary rounded-2xl shadow-sm p-6 border border-accent-content">
           <h3 className="font-semibold text-primary-content mb-4 flex items-center gap-2">
             <FiShield /> Role & Status
           </h3>
@@ -145,17 +139,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
