@@ -5,9 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { imageUpload } from "../../../utils";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-// import { useEffect, useState } from "react";
 import { LucidePlus } from "lucide-react";
-// import axios from "axios";
 import { useState } from "react";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
