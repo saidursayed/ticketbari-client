@@ -127,7 +127,6 @@ const DashboardLayout = () => {
             <Outlet />
           </div>
         </div>
-        
       </div>
 
       {/* ================= SIDEBAR ================= */}
@@ -136,18 +135,18 @@ const DashboardLayout = () => {
 
         <div className="flex min-h-full flex-col bg-info-content border-r border-accent-content shadow-sm is-drawer-close:w-16 is-drawer-open:w-64 transition-all duration-300">
           {/* LOGO */}
-          <div className="flex items-center justify-center py-4 ">
+          <div className="flex items-center justify-center pt-4 pb-2 is-drawer-close:hidden">
             <Link to="/">
               <img
                 src={logo}
                 alt="logo"
-                className="w-40 is-drawer-close:w-8 transition-all duration-300"
+                className="w-40 is-drawer-close:w-8  transition-all duration-300"
               />
             </Link>
           </div>
 
           {/* MENU */}
-          <ul className="menu w-full flex flex-col flex-1 px-2 py-4">
+          <ul className="menu w-full flex flex-col flex-1 px-2">
             {/* Top items */}
             <div className="space-y-1">
               <MenuItem icon={CgProfile} label="Profile" address="/dashboard" />

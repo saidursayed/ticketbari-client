@@ -9,13 +9,16 @@ const PaymentSuccess = () => {
   const sessionId = searchParams.get("session_id");
   const [paymentInfo, setPaymentInfo] = useState();
 
-
   useEffect(() => {
     if (sessionId) {
-      axios.patch(`${import.meta.env.VITE_API_URL}/payment-success?session_id=${sessionId}`).then((res) => {
-        console.log(res.data);
-        setPaymentInfo(res.data);
-      });
+      axios
+        .patch(
+          `${import.meta.env.VITE_API_URL}/payment-success?session_id=${sessionId}`,
+        )
+        .then((res) => {
+          console.log(res.data);
+          setPaymentInfo(res.data);
+        });
     }
   }, [sessionId]);
   console.log(paymentInfo);

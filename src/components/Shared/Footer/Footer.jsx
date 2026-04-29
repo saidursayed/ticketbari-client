@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Column 1 - Brand */}
           <div>
             <Link to="/" className="inline-block">
-              <img src={logo} alt="logo" className="h-10" />
+              <img src={logo} alt="logo" className="h-9 md:h-12" />
             </Link>
             <p className="text-sm mt-4 leading-relaxed text-gray-400">
               Book bus, train, launch & flight tickets easily with secure
