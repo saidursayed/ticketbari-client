@@ -83,8 +83,8 @@ const Navbar = () => {
                 })}
               </ul>
             </div>
-            <Link className="ml-2" to="/">
-              <img src={logo} alt="logo" className="h-9 md:h-12" />
+            <Link className="ml-1 md:ml-2" to="/">
+              <img src={logo} alt="logo" className="h-8 md:h-12" />
             </Link>
           </div>
 
@@ -117,7 +117,7 @@ const Navbar = () => {
           <div className="navbar-end">
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className={`p-2 rounded-xl border border-accent-content transition mr-4  hover:bg-primary cursor-pointer ${theme === "light" && "hover:text-secondary"}`}
+              className={`p-2 rounded-xl border border-accent-content transition mr-2 md:mr-4  hover:bg-primary cursor-pointer ${theme === "light" && "hover:text-secondary"}`}
             >
               {theme === "light" ? (
                 <FiMoon className="text-xl " />
@@ -180,7 +180,7 @@ const Navbar = () => {
                 {/* Sign In */}
                 <Link
                   to="/login"
-                  className="group flex items-center gap-2 px-5 py-2.5 rounded-lg border border-primary/30 text-[#ffffff] sm:text-primary-content text-sm font-semibold bg-primary sm:bg-transparent hover:bg-primary hover:text-[#ffffff] transition-all duration-300"
+                  className="group flex items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 rounded-lg border border-primary/30 text-[#ffffff] sm:text-primary-content text-sm font-semibold bg-primary sm:bg-transparent hover:bg-primary hover:text-[#ffffff] transition-all duration-300"
                 >
                   <FaRegUser className="text-base" />
                   <span>Sign In</span>
