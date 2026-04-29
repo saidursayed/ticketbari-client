@@ -1,27 +1,29 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { imageUpload } from "../../../utils";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { LucidePlus } from "lucide-react";
+// import axios from "axios";
+import { useState } from "react";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const AddTicketForm = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [uploading, setUploading] = useState(false);
 
-  const [dbUser, setDBUser] = useState(null);
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
-      setDBUser(res.data);
-    };
-
-    if (user?.email) fetchUser();
-  }, [user?.email, axiosSecure]);
+  const { data: dbUser, isLoading } = useQuery({
+    queryKey: ["dbUser", user?.email],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/users/${user.email}`);
+      return result.data;
+    },
+    enabled: !!user?.email,
+  });
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (payload) => await axiosSecure.post(`/tickets`, payload),
@@ -80,6 +82,7 @@ const AddTicketForm = () => {
     }
   };
 
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div className="p-6">
       {/* Header */}

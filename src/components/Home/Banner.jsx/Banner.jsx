@@ -6,7 +6,7 @@ import { LuBus } from "react-icons/lu";
 
 const Banner = () => {
   return (
-    <div className="bg-linear-to-br from-primary/5 via-background to-accent/5 pb-20 pt-40">
+    <div className="bg-linear-to-br from-primary/5 via-background to-accent/5 pb-10 md:pb-20 md:pt-40 pt-26">
       <Container>
         <div className=" text-center">
           <div className="text-4xl md:text-5xl lg:text-6xl font-bold">
@@ -15,41 +15,11 @@ const Banner = () => {
           </div>
 
           {/* Description */}
-          <p className="mt-6 tex  md:text-lg text-gray-600  mx-auto">
+          <p className="mt-6 tex  md:text-lg text-secondary-content  mx-auto">
             Discover and book travel tickets for Bus, Train, Launch, and Flight
             across Bangladesh. Safe, reliable, and <br /> convenient travel at
             your fingertips.
           </p>
-
-          {/* Search Box */}
-          {/* <div className="mt-10 flex justify-center">
-            <div className="bg-secondary p-6 rounded-xl shadow-md flex flex-col md:flex-row gap-4 items-center">
-              <input
-                type="text"
-                placeholder="Departure city"
-                className="border rounded-lg px-4 py-2 outline-none w-full md:w-48"
-              />
-
-              <input
-                type="text"
-                placeholder="Destination city"
-                className="border rounded-lg px-4 py-2 outline-none w-full md:w-48"
-              />
-
-              <select className="border rounded-lg px-4 py-2 outline-none w-full md:w-40">
-                <option>Any type</option>
-                <option>Bus</option>
-                <option>Train</option>
-                <option>Launch</option>
-                <option>Plane</option>
-              </select>
-
-              <button className="flex items-center gap-2 bg-blue-600 text-secondary px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                <FiSearch />
-                Search
-              </button>
-            </div>
-          </div> */}
 
           {/* Transport Icons */}
           <div className="mt-10 flex flex-wrap justify-center gap-8 text-secondary-content">
